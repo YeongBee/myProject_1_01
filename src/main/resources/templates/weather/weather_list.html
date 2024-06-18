@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Weather</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.0.2/tailwind.min.css'>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/weather-icons/2.0.10/css/weather-icons.min.css">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+</head>
+<body>
+
+
+<div class="flex flex-col items-center justify-center w-screen min-h-screen text-gray-700 p-10 bg-gradient-to-br from-pink-200 via-purple-200 to-indigo-200 ">
+    <div class="w-full max-w-screen-sm bg-white p-10 rounded-xl ring-8 ring-white ring-opacity-40">
+        <div>
+            <form method="Get" class="mb-4">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="startDate">시작 날짜:</label>
+                        <input type="date" id="startDate" name="startDate" th:value="${startDate}" required
+                               class="form-control"/>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="endDate">종료 날짜:</label>
+                        <input type="date" id="endDate" name="endDate" th:value="${endDate}" required
+                               class="form-control"/>
+                    </div>
+                </div>
+                <div class="text-right">
+                    <button type="submit" class="btn btn-primary">검색</button>
+                </div>
+            </form>
+            <hr class="my-4">
+        </div>
+
+        <div class="flex justify-between mt-12">
+            <table class="table table-hover table-striped w-full">
+                <thead>
+                <tr class="bg-gray-100 text-gray-600">
+                    <th class="px-4 py-3">날짜</th>
+                    <th class="px-4 py-3">시간</th>
+                    <th class="px-4 py-3">온도</th>
+                    <th class="px-4 py-3">습도</th>
+                    <th class="px-4 py-3">토양</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="one : ${selectList}" class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="px-4 py-3" th:text="${#temporals.format(one.localDateTime, 'yyyy-MM-dd')}"></td>
+                    <td class="px-4 py-3" th:text="${#temporals.format(one.localDateTime, 'HH:mm:ss')}"></td>
+                    <td class="px-4 py-3" th:text="${one.temperature}"></td>
+                    <td class="px-4 py-3" th:text="${one.humidity}"></td>
+                    <td class="px-4 py-3" th:text="${one.soilMoisture}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <!-- 페이징처리 시작 -->
+    <div th:if="${!selectList.isEmpty()}">
+        <ul class="pagination justify-content-center">
+            <li class="page-item" th:classappend="${!selectList.hasPrevious} ? 'disabled'">
+
+                <a class="page-link" th:if="${startDate == null || endDate == null}"
+                   th:href="@{|?page=${selectList.number-1}|}">
+                    <span>이전</span>
+                </a>
+
+                <a class="page-link" th:if="${startDate != null && endDate != null}"
+                   th:href="@{|?page=${selectList.number-1}&startDate=${startDate}&endDate=${endDate}|}">
+                    <span>이전</span>
+                </a>
+            </li>
+
+            <li th:each="page: ${#numbers.sequence(0, selectList.totalPages-1)}"
+                th:classappend="${page == selectList.number} ? 'active'"
+                class="page-item">
+                <a th:text="${page}" class="page-link" th:if="${startDate == null || endDate == null}"
+                   th:href="@{|?page=${page}|}">
+                </a>
+
+                <a th:text="${page}" class="page-link" th:if="${startDate != null && endDate != null}"
+                   th:href="@{|?page=${page}&startDate=${startDate}&endDate=${endDate}|}">
+                </a>
+            </li>
+
+            <li class="page-item" th:classappend="${!selectList.hasNext} ? 'disabled'">
+                <a class="page-link" th:if="${startDate == null || endDate == null}"
+                   th:href="@{|?page=${selectList.number+1}|}">
+                    <span>다음</span>
+                </a>
+
+                <a class="page-link" th:if="${startDate != null && endDate != null}"
+                   th:href="@{|?page=${selectList.number+1}&startDate=${startDate}&endDate=${endDate}|}">
+                    <span>다음</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+
+
+    <!-- 페이징처리 끝 -->
+
+</div>
+</body>
+</html>
