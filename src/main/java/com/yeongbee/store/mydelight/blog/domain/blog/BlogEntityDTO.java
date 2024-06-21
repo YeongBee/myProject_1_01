@@ -4,6 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 
 @Getter
@@ -16,6 +19,9 @@ public class BlogEntityDTO {
 
     @NotNull(message = "공백 x")
     private String content;
+
+    private List<MultipartFile> imageFile;
+    private MultipartFile thumb;
 
     public BlogEntityDTO() {}
 

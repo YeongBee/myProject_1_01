@@ -1,13 +1,18 @@
 package com.yeongbee.store.mydelight.blog.service;
 
-
+import com.yeongbee.store.mydelight.blog.domain.FIleStore;
 import com.yeongbee.store.mydelight.blog.domain.account.Account;
 import com.yeongbee.store.mydelight.blog.domain.blog.BlogEntity;
 import com.yeongbee.store.mydelight.blog.domain.blog.BlogEntityDTO;
+import com.yeongbee.store.mydelight.blog.domain.blog.UploadFile;
 import com.yeongbee.store.mydelight.blog.repository.BlogRepository;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.FileStore;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -16,12 +21,24 @@ import java.util.NoSuchElementException;
 @RequiredArgsConstructor
 public class BlogService {
 
+    private static final Logger log = LoggerFactory.getLogger(BlogService.class);
     private final BlogRepository blogRepository;
+    private final FIleStore fIleStore;
 
-    public void save(BlogEntityDTO blogEntityDTO, Account account) {
+    public BlogEntity save(BlogEntityDTO blogEntityDTO, Account account) throws IOException {
+
+        List<UploadFile> files = fIleStore.storeFiles(blogEntityDTO.getImageFile());
+
+        log.info("ImageList={}", files.toString());
+
         BlogEntity blogEntity = new BlogEntity(blogEntityDTO.getTitle(),blogEntityDTO.getContent(),
-                LocalDateTime.now(),account);
-        blogRepository.save(blogEntity);
+                LocalDateTime.now(),account, files);
+
+        for (UploadFile file : files) {
+            file.setBlog(blogEntity);
+        }
+
+        return blogRepository.save(blogEntity);
     }
 
     public List<BlogEntity> findAll() {

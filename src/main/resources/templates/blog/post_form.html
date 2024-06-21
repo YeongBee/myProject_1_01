@@ -29,7 +29,7 @@
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <form action method="POST">
+                <form th:action method="POST" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="title">제목:</label>
                         <input type="text" id="title" name="title" class="form-control" required>
@@ -37,6 +37,10 @@
                     <div class="form-group">
                         <label for="content">내용:</label>
                         <textarea id="content" name="content" class="form-control" rows="4" required></textarea>
+                    </div>
+                    <div>
+                        <label for="imageFile">Image:</label>
+                        <input type="file" id="imageFile" name="imageFile" multiple="multiple">
                     </div>
                     <button type="submit" class="btn btn-primary">보내기</button>
                 </form>
