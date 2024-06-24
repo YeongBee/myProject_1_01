@@ -100,7 +100,6 @@ public class WeatherShtService {
     }
 
 
-
     public List<WeatherForecastAPI> getShtFiveWeather() {
          LocalDateTime localDateTime = LocalDateTime.now();
 
