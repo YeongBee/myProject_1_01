@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import jakarta.validation.constraints.Null;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 
 import org.json.simple.JSONArray;
@@ -14,6 +15,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
@@ -21,6 +23,10 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
 
@@ -125,14 +131,16 @@ public class WeatherShtService {
 
 
     @Scheduled(cron = "0 41 * * * ?")
-    private void usnInputData() throws IOException, ParseException, IllegalAccessException {
+    private void usnInputData(){
 
         LocalDateTime localDateTime = LocalDateTime.now();
 
 //        String baseTime = localDateTime.minusMinutes(1).format(DateTimeFormatter.ofPattern("HHmm"));
         String baseTime = localDateTime.format(DateTimeFormatter.ofPattern("HHmm"));
         try {
+
             JSONArray jsonData = integratedService.getWeatherJsonArray(SetUrl(baseTime, usnUrl, localDateTime));
+
             for (Object jsonDat : jsonData) {
                 JSONObject itemObject = (JSONObject) jsonDat;
                 String category = (String) itemObject.get("category");
@@ -142,7 +150,9 @@ public class WeatherShtService {
 
             }
         }catch (NullPointerException e){
-            log.error("초단기 실황 데이터는 0 ~ 10분 사이 데이터를 제공하지 않습니다.");
+            log.error("초단기 실황 데이터는 0 ~ 6분 사이 데이터를 제공하지 않습니다.");
+            log.info("1분후 다시 시작");
+            retryUsnInputData();
             log.error(e.getMessage());
         }
 
@@ -152,6 +162,11 @@ public class WeatherShtService {
 
     }
 
+    @SneakyThrows
+    private void retryUsnInputData(){
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.schedule(this::usnInputData, 1, TimeUnit.MINUTES);
+    }
 
 
     // 처음 시작시 데이터가 없으므로 init을 해서 API 데이터를 가져옴
@@ -193,8 +208,8 @@ public class WeatherShtService {
 
         String weatherJson = integratedService.getWeatherJson(urlParams, vilageUrl);
 
-        try {
-             JSONArray jsonData = integratedService.getWeatherJsonArray(weatherJson);
+
+        JSONArray jsonData = integratedService.getWeatherJsonArray(weatherJson);
             JSONObject itemObject;
 
             for (Object data : jsonData) {
@@ -208,10 +223,6 @@ public class WeatherShtService {
             }
 
 
-        }catch (NullPointerException e){
-            e.printStackTrace();
-        }
-
 
         log.info("weatherShtDate={}  weatherShtTime={}", baseDate, baseTime);
         log.info("WeatherShtService : update Size={}", weatherForecastList.size());
@@ -221,54 +232,73 @@ public class WeatherShtService {
 
     // 정해진 시간마다 api를 불러옴
     @Scheduled(cron = "00 11 2,5,8,11,14,17,20,23 * * ?")
-    private void inputData() throws ParseException, IOException, IllegalAccessException {
+    private void inputData(){
 
         LocalDateTime localDateTime = LocalDateTime.now();
         String baseTime = localDateTime.format(DateTimeFormatter.ofPattern("HHmm")).substring(0,2)+"00";
 
         weatherForecastList.clear();
 
-
-        JSONArray jsonData = integratedService.getWeatherJsonArray(SetUrl(baseTime, vilageUrl, localDateTime));
-        JSONObject itemObject;
-
-        for (Object data : jsonData) {
-            itemObject = (JSONObject) data;
-            String forcastDate = (String) itemObject.get("fcstDate");
-            String forcastTime = (String) itemObject.get("fcstTime");
-            String category = (String) itemObject.get("category");
-            String value = (String) itemObject.get("fcstValue");
-            WeatherForecastAPI weatherForecastAPI = findExistingForecast(forcastDate, forcastTime);
-            updateEntityFromJsonObject(weatherForecastAPI, category, value);
+        try {
+            JSONArray jsonData = integratedService.getWeatherJsonArray(SetUrl(baseTime, vilageUrl, localDateTime));
+            JSONObject itemObject;
+            for (Object data : jsonData) {
+                itemObject = (JSONObject) data;
+                String forcastDate = (String) itemObject.get("fcstDate");
+                String forcastTime = (String) itemObject.get("fcstTime");
+                String category = (String) itemObject.get("category");
+                String value = (String) itemObject.get("fcstValue");
+                WeatherForecastAPI weatherForecastAPI = findExistingForecast(forcastDate, forcastTime);
+                updateEntityFromJsonObject(weatherForecastAPI, category, value);
+            }
+            log.info("WeatherSht Update : {}", baseTime);
+            log.info("weatherForecastList size: " + weatherForecastList.size());
+        } catch (NullPointerException e){
+            retryInputData();
         }
-        log.info("WeatherSht Update : {}", baseTime);
-        log.info("weatherForecastList size: " + weatherForecastList.size());
+    }
+
+    @SneakyThrows
+    private void retryInputData() {
+        ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+        executorService.schedule(this::inputData, 1, TimeUnit.MINUTES);
     }
 
 
 
     // API를 클래스에 매핑
-    public void updateEntityFromJsonObject(Object entity, String cate, String values) throws IllegalAccessException {
+    public void updateEntityFromJsonObject(Object entity, String cate, String values) {
 
         for (Field field : entity.getClass().getDeclaredFields()) {
             String fieldName = field.getName();
             field.setAccessible(true);
-            if (cate.equals(fieldName)) {
-                field.set(entity, values);
+            try {
+                if (cate.equals(fieldName)) {
+                    field.set(entity, values);
+                }
+            } catch (IllegalArgumentException | IllegalAccessException e) {
+               log.error("updateEntityFromJsonObject : ", e);
             }
+
         }
     }
 
     // API 데이터 불러오기
-    private String SetUrl(String baseTimes, String url, LocalDateTime localDateTime) throws IOException {
+    private String SetUrl(String baseTimes, String url, LocalDateTime localDateTime) {
 
 
         String baseDate = localDateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
-        String urlParams = "?serviceKey=" + URLEncoder.encode(serviceKey, "UTF-8")
-                + "&pageNo=1&numOfRows=1000&dataType=JSON&base_date=" + baseDate + "&base_time=" + baseTimes + "&nx=64&ny=123";
 
-        return integratedService.getWeatherJson(urlParams, url);
+        try {
+            String urlParams = "?serviceKey=" + URLEncoder.encode(serviceKey, "UTF-8")
+                    + "&pageNo=1&numOfRows=1000&dataType=JSON&base_date=" + baseDate + "&base_time=" + baseTimes + "&nx=64&ny=123";
+
+            return integratedService.getWeatherJson(urlParams, url);
+        } catch (IOException e){
+            log.error("setUrl : ", e);
+            return "NoData SetUrl";
+        }
     }
 
     // API 데이터 중복체크

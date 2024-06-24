@@ -36,6 +36,7 @@ public class WeatherAPIController {
         List<WeatherForecastAPI> fiveWeather = shtService.getShtFiveWeather();
         WeatherMyApiEntity myApiEntity = myApiService.findLatestData();
 
+
         model.addAttribute("weatherUSN", weatherUSN);
         model.addAttribute("weatherSets", weatherSht);
         model.addAttribute("weatherFive", fiveWeather);

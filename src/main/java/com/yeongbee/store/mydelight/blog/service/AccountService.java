@@ -30,5 +30,4 @@ public class AccountService {
                 () -> new NoSuchElementException("Account with username " + username + " not found")
         );
     }
-
 }

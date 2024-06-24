@@ -75,8 +75,6 @@ public class BlogController {
     public String blogCreate(@Validated BlogEntityDTO blogEntityDTO, BindingResult bindingResult,
                              Principal principal, RedirectAttributes redirectAttributes) throws IOException {
 
-
-
         try {
             Account account = accountService.findByUsername(principal.getName());
 

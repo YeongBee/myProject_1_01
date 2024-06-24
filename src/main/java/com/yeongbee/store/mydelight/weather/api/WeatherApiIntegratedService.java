@@ -40,13 +40,17 @@ public class WeatherApiIntegratedService {
         return sb.toString();
     }
 
-    public JSONArray getWeatherJsonArray(String response) throws  ParseException {
+    public JSONArray getWeatherJsonArray(String response){
 
-        JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject) jsonParser.parse(response);
-        JSONObject responseObject = (JSONObject) jsonObject.get("response");
-        JSONObject bodyObject = (JSONObject) responseObject.get("body");
-        JSONObject itemsObject = (JSONObject) bodyObject.get("items");
-        return (JSONArray) itemsObject.get("item");
+        try {
+            JSONParser jsonParser = new JSONParser();
+            JSONObject jsonObject = (JSONObject) jsonParser.parse(response);
+            JSONObject responseObject = (JSONObject) jsonObject.get("response");
+            JSONObject bodyObject = (JSONObject) responseObject.get("body");
+            JSONObject itemsObject = (JSONObject) bodyObject.get("items");
+            return (JSONArray) itemsObject.get("item");
+        } catch (ParseException e){
+            return null;
+        }
     }
 }
