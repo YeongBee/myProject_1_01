@@ -6,6 +6,7 @@ import com.yeongbee.store.mydelight.blog.domain.blog.BlogEntity;
 import com.yeongbee.store.mydelight.blog.domain.blog.BlogEntityDTO;
 import com.yeongbee.store.mydelight.blog.domain.blog.UploadFile;
 import com.yeongbee.store.mydelight.blog.repository.BlogRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,6 +26,7 @@ public class BlogService {
     private final BlogRepository blogRepository;
     private final FIleStore fIleStore;
 
+    @Transactional
     public BlogEntity save(BlogEntityDTO blogEntityDTO, Account account) throws IOException {
 
         List<UploadFile> files = fIleStore.storeFiles(blogEntityDTO.getImageFile());
@@ -51,6 +53,7 @@ public class BlogService {
 
 
     // 변경 감지 기능을 통해 DB에 반영
+    @Transactional
     public void update(BlogEntityDTO blogEntityDTO, Long id) {
         BlogEntity blogEntity = findById(id);
         blogEntity.update(blogEntityDTO.getTitle(), blogEntityDTO.getContent());

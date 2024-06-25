@@ -29,6 +29,10 @@
             font-size: 24px;
         }
 
+        .weather-size-bot2{
+            font-size: 28px;
+        }
+
     </style>
 
 </head>
@@ -111,7 +115,7 @@
                 </div>
 
                 <div  class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} >= 3 and
-                (${#strings.substring(result.fcstTime, 0, 2)} <= '19' and ${#strings.substring(result.fcstTime, 0, 2)} > '06')">
+                (${#strings.substring(result.fcstTime, 0, 2)} > '19' and ${#strings.substring(result.fcstTime, 0, 2)} <= '06')">
                     <i class="fa-solid fa-cloud-moon weather-moon weather-size-sub"></i>
                 </div>
 
@@ -190,7 +194,7 @@
                     </div>
 
                     <div th:if="${set.wfAm} =='흐림'" >
-                        <i class="fa-solid fa-cloud 2x cloud-gray weather-size-bot"></i>
+                        <i class="fa-solid fa-cloud 2x cloud-gray weather-size-bot2"></i>
                     </div>
 
 
@@ -215,7 +219,7 @@
                     </div>
 
                     <div th:if="${set.wfPm} =='흐리고 비'">
-                        <i class="fa-solid fa-cloud-showers-heavy  cloud-gray  weather-size-bot"></i>
+                        <i class="fa-solid fa-cloud-showers-heavy  cloud-gray  weather-size-bot2"></i>
                     </div>
                 </span>
             </div>
