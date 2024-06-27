@@ -57,9 +57,9 @@ public class BlogService {
     public void update(BlogEntityDTO blogEntityDTO, Long id) {
         BlogEntity blogEntity = findById(id);
         blogEntity.update(blogEntityDTO.getTitle(), blogEntityDTO.getContent());
-        blogRepository.save(blogEntity);
     }
 
+    @Transactional
     public void delete(Long id) {
         blogRepository.deleteById(id);
     }

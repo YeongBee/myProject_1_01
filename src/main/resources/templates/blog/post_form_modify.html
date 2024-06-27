@@ -31,12 +31,14 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <form th:action method="POST" enctype="multipart/form-data">
                     <div class="form-group pb-2"><label for="title">제목:</label>
-                        <input type="text" id="title" name="title" class="form-control" required></div>
+                        <input type="text" id="title" name="title" class="form-control" th:value="${blogEntityDTO.title}" required>
+                    </div>
                     <div class="form-group pb-2 mt-3"><label for="content">내용:</label>
-                        <textarea id="content" name="content" class="form-control" rows="15" required></textarea>
+                        <textarea id="content" name="content" class="form-control" rows="15" th:text="${blogEntityDTO.content}" required></textarea>
                     </div>
                     <div class="mt-3"><label for="imageFile"></label>
-                        <input type="file" id="imageFile" name="imageFile" multiple="multiple"></div>
+                        <input type="file" id="imageFile" name="imageFile" multiple="multiple">
+                    </div>
                     <button type="submit" class="btn btn-primary mt-3">완료</button>
                 </form>
             </div>

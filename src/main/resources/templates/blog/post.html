@@ -8,14 +8,12 @@
     <meta name="author" content=""/>
     <title>YeongBee-Blog</title>
     <link rel="icon" type="image/x-icon" href="/blogs/assets/favicon.ico"/>
-    <!-- Font Awesome icons (free version)-->
+
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-    <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet"
           type="text/css"/>
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
           rel="stylesheet" type="text/css"/>
-    <!-- Core theme CSS (includes Bootstrap)-->
     <link href="/blogs/css/styles.css" rel="stylesheet"/>
 </head>
 <body>
@@ -23,8 +21,12 @@
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="/blog">YeongBee</a>
+        <a class="navbar-brand ms-sm-auto" sec:authorize="isAuthenticated()" th:href="@{/blog/modify/{id}(id=${post.id})}">수정</a>
+        <a class="navbar-brand ms-sm-auto" sec:authorize="isAuthenticated()" th:href="@{/blog/delete/{id}(id=${post.id})}">삭제</a>
+
         <a class="navbar-brand ms-sm-auto" sec:authorize="isAnonymous()" href="/login">Login</a>
         <a class="navbar-brand ms-sm-auto" sec:authorize="isAuthenticated()" href="/logout">LogOut</a>
+
     </div>
 </nav>
 <!-- Page Header-->
@@ -44,7 +46,7 @@
     </div>
 </header>
 <!-- Post Content-->
-<article class="mb-4">
+<div class="mb-4">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
@@ -53,12 +55,11 @@
         </div>
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
-                <img th:each="imageFile : ${post.uploadFiles}" th:src="|/blog/images/${imageFile.getStoreFileName()}|" width="300" height="300"/>
+                <img th:each="imageFile : ${post.uploadFiles}" th:src="|/blog/images/${imageFile.getStoreFileName()}|" width="300px" height="300px">
             </div>
         </div>
-
     </div>
-</article>
+</div>
 <!-- Footer-->
 <footer class="border-top">
     <div class="container px-4 px-lg-5">
@@ -66,7 +67,7 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <ul class="list-inline text-center">
                     <li class="list-inline-item">
-                        <a href="#!">
+                        <a href="https://github.com/YeongBee/YeongBee">
                             <span class="fa-stack fa-lg">
                                 <i class="fas fa-circle fa-stack-2x"></i>
                                 <i class="fab fa-github fa-stack-1x fa-inverse"></i>

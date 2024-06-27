@@ -97,16 +97,19 @@ public class BlogController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
-    public String blogModify(BlogEntityDTO blogEntityDTO, @PathVariable("id") Long id, Principal principal) {
+    public String blogModify(Model model, @PathVariable("id") Long id, Principal principal) {
         BlogEntity blog = blogService.findById(id);
 
         if (!blog.getAccount().getUsername().equals(principal.getName())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
+            model.addAttribute("errorMessage", "수정 권한이 없습니다.");
+            return "redirect:/blog/{id}";
         }
 
+        BlogEntityDTO blogEntityDTO = new BlogEntityDTO();
         blogEntityDTO.setTitle(blog.getTitle());
         blogEntityDTO.setContent(blog.getContent());
-        return "blog/blog_form";
+        model.addAttribute("blogEntityDTO", blogEntityDTO);
+        return "blog/post_form_modify";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -115,24 +118,28 @@ public class BlogController {
                              Principal principal, @PathVariable("id") Long id) {
         if (bindingResult.hasErrors()) {
             log.info("실행 오류 post_modify");
-            return "blog/blog_form";
+            return "blog/post_form_modify";
         }
         BlogEntity blog = blogService.findById(id);
         if (!blog.getAccount().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "수정 권한이 없습니다.");
         }
         blogService.update(blogEntityDTO, id);
-        return "redirect:/blog/post" + id;
+        return "redirect:/blog/post/" + id;
     }
 
     @GetMapping("/delete/{id}")
     public String blogDelete(@PathVariable Long id, Principal principal) {
         BlogEntity blog = blogService.findById(id);
+
         if (!blog.getAccount().getUsername().equals(principal.getName())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
         }
 
-        return "redirect:/blog/list";
+            blogService.delete(id);
+
+
+        return "redirect:/blog";
     }
 }
 

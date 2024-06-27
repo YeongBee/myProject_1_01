@@ -23,8 +23,7 @@ public class SecurityConfig {
             "/blog/create",
             "/login",
             "/weather/api",
-            "/weather/list",
-            "/releases/create"
+            "/weather/list"
     };
 
     @Bean
