@@ -8,6 +8,7 @@ import com.yeongbee.store.mydelight.blog.domain.blog.UploadFile;
 import com.yeongbee.store.mydelight.blog.repository.BlogRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,9 @@ import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class BlogService {
 
-    private static final Logger log = LoggerFactory.getLogger(BlogService.class);
     private final BlogRepository blogRepository;
     private final FIleStore fIleStore;
 
