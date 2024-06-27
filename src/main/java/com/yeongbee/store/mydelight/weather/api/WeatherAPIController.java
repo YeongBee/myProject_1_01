@@ -38,10 +38,12 @@ public class WeatherAPIController {
 
 
         model.addAttribute("weatherUSN", weatherUSN);
-        model.addAttribute("weatherSets", weatherSht);
         model.addAttribute("weatherFive", fiveWeather);
         model.addAttribute("myApiEntity", myApiEntity);
+        model.addAttribute("weatherSets", weatherSht);
 
+        log.info("weatherUSN={}",weatherUSN.toString());
+        log.info("weatherFive={}",fiveWeather.toString());
         return "weather/weather_view";
     }
 

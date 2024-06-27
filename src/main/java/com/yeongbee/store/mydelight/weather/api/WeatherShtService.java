@@ -296,7 +296,7 @@ public class WeatherShtService {
 
             return integratedService.getWeatherJson(urlParams, url);
         } catch (IOException e){
-            log.error("setUrl : ", e);
+            log.error("setUrl : Connection error");
             return "NoData SetUrl";
         }
     }

@@ -76,7 +76,7 @@
             </li>
 
             <li th:each="page: ${#numbers.sequence(0, selectList.totalPages-1)}"
-                th:if="${page >= selectList.number-5 and page <= selectList.number+5}"
+                th:if="${page >= selectList.number-3 and page <= selectList.number+3}"
                 th:classappend="${page == selectList.number} ? 'active'" class="page-item">
                 <a th:text="${page}" class="page-link" th:if="${startDate == null || endDate == null}"
                    th:href="@{|?page=${page}|}">
