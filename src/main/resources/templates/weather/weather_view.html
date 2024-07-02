@@ -76,7 +76,7 @@
             </div>
 
             <div th:if="${weatherUSN.PTY} == 0 and ${weatherFive[0].SKY} >= 3 and
-                (${#strings.substring(weatherFive[0].fcstTime, 0, 2)} > '19' and ${#strings.substring(weatherFive[0].fcstTime, 0, 2)} <= '06')">
+                (${#strings.substring(weatherFive[0].fcstTime, 0, 2)} > '19' or ${#strings.substring(weatherFive[0].fcstTime, 0, 2)} <= '06')">
                 <i class="fa-solid fa-cloud-moon weather-moon weather-size-main"></i>
             </div>
 

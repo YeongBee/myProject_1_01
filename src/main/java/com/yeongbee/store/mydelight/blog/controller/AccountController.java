@@ -26,9 +26,4 @@ public class AccountController {
 
         return "blog/login_form";
     }
-
-/*    @PostMapping("/login")
-    public String blogLogin(@Validated LoginForm loginForm, BindingResult bindingResult) {
-        return "blog/login_form";
-    }*/
 }

@@ -14,9 +14,9 @@ public class UploadFile {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne()
+/*    @ManyToOne()
     @JoinColumn(name = "blog_id")
-    private BlogEntity blog;
+    private BlogEntity blog;*/
 
     private String uploadFileName;
     private String storeFileName;
@@ -26,9 +26,9 @@ public class UploadFile {
         this.storeFileName = storeFileName;
     }
 
-    public void setBlog(BlogEntity blog) {
+/*    public void setBlog(BlogEntity blog) {
         this.blog = blog;
-    }
+    }*/
 
     public UploadFile() {
 

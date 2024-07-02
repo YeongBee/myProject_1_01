@@ -13,6 +13,7 @@ import org.springframework.security.web.header.writers.frameoptions.XFrameOption
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 @Configuration
 @EnableWebSecurity
@@ -23,7 +24,10 @@ public class SecurityConfig {
             "/blog/create",
             "/login",
             "/weather/api",
-            "/weather/list"
+            "/weather/list",
+            "/blog/test",
+            "/blog/test2",
+            "/blog/upload"
     };
 
     @Bean

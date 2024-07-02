@@ -3,8 +3,7 @@ package com.yeongbee.store.mydelight.blog.controller;
 
 import com.yeongbee.store.mydelight.blog.domain.FIleStore;
 import com.yeongbee.store.mydelight.blog.domain.account.Account;
-import com.yeongbee.store.mydelight.blog.domain.blog.BlogEntity;
-import com.yeongbee.store.mydelight.blog.domain.blog.BlogEntityDTO;
+import com.yeongbee.store.mydelight.blog.domain.blog.*;
 import com.yeongbee.store.mydelight.blog.domain.comment.CommentDTO;
 import com.yeongbee.store.mydelight.blog.service.AccountService;
 import com.yeongbee.store.mydelight.blog.service.BlogService;
@@ -12,22 +11,27 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.Principal;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -37,7 +41,7 @@ public class BlogController {
 
     private final BlogService blogService;
     private final AccountService accountService;
-    private final FIleStore fIleStore;
+    private final FIleStore filestore;
 
     @GetMapping("")
     public String blogMain(Model model) {
@@ -55,25 +59,33 @@ public class BlogController {
         return "blog/post";
     }
 
-    @ResponseBody
+
     @GetMapping("/images/{filename}")
-    public Resource downloadImage(@PathVariable String filename) throws
-            MalformedURLException {
-        log.info("filename: {}", filename);
-        log.info("filePath: {}", fIleStore.getFullPath(filename));
-        return new UrlResource("file:" + fIleStore.getFullPath(filename));
+    public ResponseEntity<Resource> downloadImage(@PathVariable String filename) throws IOException {
+        String fullPath = filestore.getFullPath(filename);
+        MediaType mediaType = MediaType.parseMediaType(Files.probeContentType(Paths.get(fullPath)));
+        UrlResource resource = new UrlResource("file:" + fullPath);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, mediaType.toString())
+                .body(resource);
     }
 
+    @PostMapping("/upload")
+    public ResponseEntity<List<Map<String, String>>> uploadImageFiles(@RequestParam("imageFile") List<MultipartFile> files) {
 
-    @GetMapping("/create")
-    public String blogCreate(Model model) {
-        return "blog/post_form";
+        List<Map<String, String>> imageSave = blogService.imagesave(files);
+        if(!imageSave.isEmpty()){
+            return ResponseEntity.status(HttpStatus.CREATED).body(imageSave);
+        } else {
+            log.error("File is null");
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
-    public String blogCreate(@Validated BlogEntityDTO blogEntityDTO, BindingResult bindingResult,
-                             Principal principal, RedirectAttributes redirectAttributes) throws IOException {
+    public String blogCreate(@Validated BlogEntityDTO blogEntityDTO,
+                             BindingResult bindingResult, Principal principal){
 
         try {
             Account account = accountService.findByUsername(principal.getName());
@@ -82,6 +94,7 @@ public class BlogController {
                 log.error("실행 오류 post_create ={}", bindingResult.getAllErrors());
                 return "redirect:/blog/create";
             }
+
 
             BlogEntity blog = blogService.save(blogEntityDTO, account);
 
@@ -93,6 +106,13 @@ public class BlogController {
 
         }
     }
+
+
+    @GetMapping("/create")
+    public String blogCreate(Model model) {
+        return "blog/post_form";
+    }
+
 
 
     @PreAuthorize("isAuthenticated()")
@@ -111,6 +131,7 @@ public class BlogController {
         model.addAttribute("blogEntityDTO", blogEntityDTO);
         return "blog/post_form_modify";
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/modify/{id}")
