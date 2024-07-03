@@ -52,6 +52,7 @@ public class GeoIPService {
         String clientip = ipUtils.extractClientIp(request);
 //        log.info("Clientip: " + clientip);
 
+
         if(clientip.equals(checkAccess) || clientip.equals(checkAccess1) ||
                 clientip.equals(checkAccess2) ||clientip.equals(checkAccess3)){
             return false;

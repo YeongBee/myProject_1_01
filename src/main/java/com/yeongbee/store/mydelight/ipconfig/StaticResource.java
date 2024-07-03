@@ -12,7 +12,8 @@ public enum StaticResource {
     MY("/my"),
     ERRORS("/errors"),
     BLOGS("/blogs"),
-    FAVICON("/favicon");
+    FAVICON("/favicon"),
+    IMAGE("/blog/images");
 
     private final String path;
 

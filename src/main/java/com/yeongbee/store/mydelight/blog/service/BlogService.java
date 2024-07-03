@@ -55,6 +55,7 @@ public class BlogService {
         return blogRepository.save(blogEntity);
     }
 
+
     public List<Map<String, String>> imagesave(List<MultipartFile> images) {
 
         try {
@@ -68,8 +69,10 @@ public class BlogService {
                 if (isAllowedExtension(extension)) {
                     UploadFile uploadFile = filestore.storeFile(file);
                     uploadFiles.add(uploadFile);
+                    log.info("file upload ={}", extension);
                 } else {
                     // 허용되지 않는 확장자의 경우 건너뛰기
+                    log.info("file upload error={}", extension);
                     log.error("Skipping file with unsupported extension: {}", originalFileName);
                 }
             }

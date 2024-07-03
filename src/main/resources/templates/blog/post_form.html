@@ -96,7 +96,7 @@
 
                 uploadedFileNames = data.map(file => file.savedFileName);
 
-                // console.log('uploadFiles : ', uploadedFileNames);
+                console.log('uploadFiles : ', uploadedFileNames);
 
 
                 var imageContainer = document.createElement('div');
@@ -112,8 +112,24 @@
                     imageElement.style.width = '80px';
                     imageElement.style.height = '80px';
                     imageElement.style.objectFit = 'cover';
+
+            /*        imageElement.addEventListener('click', function() {
+                        const imageUrl = 'http://yeongbee.store/blog/images/' + fileName;
+
+                        const tempInput = document.createElement('textarea');
+                        tempInput.value = `<img src="${imageUrl}" width="150" height="150">`;
+                        document.body.appendChild(tempInput);
+
+                        tempInput.select();
+                        document.execCommand('copy');
+
+                        document.body.removeChild(tempInput);
+
+                        alert('이미지 링크 복사 완료: ' + fileName);
+                    });*/
+
                     imageElement.addEventListener('click', function() {
-                        const imageUrl = 'http://localhost:8080/blog/images/'+fileName;
+                        const imageUrl = 'https://yeongbee.store/blog/images/'+fileName;
                         navigator.clipboard.writeText(`<img src="${imageUrl}" width="150" height="150">`);
                         alert('이미지 링크 복사 완료 : ' + fileName);
                     });
