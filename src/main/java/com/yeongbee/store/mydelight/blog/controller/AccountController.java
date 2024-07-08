@@ -43,9 +43,15 @@ public class AccountController {
     public String postSignup(@Validated AccountDTO accountDTO, BindingResult bindingResult,Model model) {
 
         String checkName = accountService.checkUsername(accountDTO.getUsername());
+        String checkNickname = accountService.checkNickname(accountDTO.getNickname());
 
         if(!checkName.equals("available")){
             model.addAttribute("error",checkName);
+            return "blog/signup_form";
+        }
+
+        if(!checkNickname.equals("available")){
+            model.addAttribute("error",checkNickname);
             return "blog/signup_form";
         }
 
@@ -65,14 +71,13 @@ public class AccountController {
 
         String result = accountService.checkUsername(username);
 
-        // 유저네임 길이 체크
-        if (result.startsWith("char")) {
+        if (result.startsWith("Char")) {
             return ResponseEntity.badRequest().body("6글자에서 20글자 사이로 작성해 주세요");
         }
-        if(result.startsWith("no")){
+        if(result.startsWith("Invalid")){
             return ResponseEntity.badRequest().body("사용할 수 없는 문자 입니다.");
         }
-        if(result.startsWith("name")){
+        if(result.startsWith("Id")){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 Id 입니다.");
         }
 
@@ -82,18 +87,20 @@ public class AccountController {
     @PostMapping("/checknickname")
     public ResponseEntity<String> checkNickname(@RequestParam("nickname") String nickname) {
 
-        if (nickname.length() < 4 || nickname.length() > 15) {
-            log.info("username {} is too long", nickname);
+        String result = accountService.checkNickname(nickname);
+
+        if (result.startsWith("Char")) {
             return ResponseEntity.badRequest().body("4글자에서 15글자 사이로 작성해 주세요");
         }
-
-        if (accountService.findByNickname(nickname).isPresent()) {
-            log.info("nickname {} already exists", nickname);
+        if(result.startsWith("Invalid")){
+            return ResponseEntity.badRequest().body("사용할 수 없는 문자 입니다.");
+        }
+        if(result.startsWith("Nickname")){
             return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 이름 입니다.");
         }
 
-        log.info("username {} is valid", nickname);
-        return ResponseEntity.ok("사용 가능합니다.");
+        return ResponseEntity.ok("사용 가능한 Nickname 입니다.");
+
     }
 
     @PostMapping("/checkemail")

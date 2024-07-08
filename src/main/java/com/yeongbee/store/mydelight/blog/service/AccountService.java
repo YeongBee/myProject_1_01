@@ -32,16 +32,27 @@ public class AccountService {
     public String checkUsername(String username) {
 
         if (username.length() < 6 || username.length() > 20) {
-            return "char length";
+            return "Char length 6 ~ 20";
         } else if(!username.matches("^[a-zA-Z0-9]{6,20}$")){
-            return "no use";
+            return "Invalid character";
         } else if (findByUsernameString(username).isPresent()) {
-            return "name in use";
+            return "Id in used";
         } else{
             return "available";
         }
     }
 
+    public String checkNickname(String nickname) {
+        if (nickname.length() < 4 || nickname.length() > 15) {
+            return "Char length 4 ~ 15";
+        } else if(!nickname.matches("^[a-zA-Z0-9]{4,15}$")){
+            return "Invalid character";
+        } else if (findByUsernameString(nickname).isPresent()) {
+            return "Nickname in used";
+        } else{
+            return "available";
+        }
+    }
 
 
     public Optional<Account> findByUsernameString(String username){
