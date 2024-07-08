@@ -19,6 +19,7 @@ public class Account {
 
     private String password;
 
+    @Column(unique = true)
     private String email;
 
     private String role;

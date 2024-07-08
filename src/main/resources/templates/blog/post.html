@@ -16,24 +16,23 @@
           rel="stylesheet" type="text/css"/>
     <link href="/blogs/css/styles.css" rel="stylesheet"/>
 </head>
-<style>
-    .words{
-        word-break:break-all
-    }
-</style>
+
 <body>
 <!-- Navigation-->
 <nav class="navbar navbar-expand-lg navbar-light" id="mainNav">
     <div class="container px-4 px-lg-5">
         <a class="navbar-brand" href="/blog">YeongBee</a>
-        <a class="navbar-brand ms-sm-auto" sec:authorize="isAuthenticated()" th:href="@{/blog/modify/{id}(id=${post.id})}">수정</a>
-        <a class="navbar-brand ms-sm-auto" sec:authorize="isAuthenticated()" th:href="@{/blog/delete/{id}(id=${post.id})}">삭제</a>
+        <div class="ms-auto">
+            <a class="navbar-brand" sec:authorize="isAuthenticated()" th:href="@{/blog/modify/{id}(id=${post.id})}">수정</a>
+            <a class="navbar-brand" sec:authorize="isAuthenticated()" th:href="@{/blog/delete/{id}(id=${post.id})}">삭제</a>
 
-        <a class="navbar-brand ms-sm-auto" sec:authorize="isAnonymous()" href="/login">Login</a>
-        <a class="navbar-brand ms-sm-auto" sec:authorize="isAuthenticated()" href="/logout">LogOut</a>
+            <a class="navbar-brand" sec:authorize="isAnonymous()" href="/login">Login</a>
+            <a class="navbar-brand" sec:authorize="isAuthenticated()" href="/logout">LogOut</a>
+        </div>
 
     </div>
 </nav>
+
 <!-- Page Header-->
 <header class="masthead bg-transparent" >
     <div class="container position-relative px-4 px-lg-5">
@@ -52,18 +51,13 @@
 </header>
 <!-- Post Content-->
 
-<div class="mb-4 words">
+<div class="mb-4" style="word-break: break-all">
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <p class="card-text" th:utext="${@commonUtil.markdown(post.content)}">Post Content</p>
             </div>
         </div>
-    <!--    <div class="row gx-4 gx-lg-5 justify-content-center">
-            <div class="col-md-10 col-lg-8 col-xl-7">
-                <img th:each="imageFile : ${post.uploadFiles}" th:src="|/blog/images/${imageFile.getStoreFileName()}|" width="300px" height="300px">
-            </div>
-        </div>-->
     </div>
 </div>
 

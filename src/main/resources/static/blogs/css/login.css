@@ -63,14 +63,36 @@ html {
     display: inline-block;
     padding: 10px 20px;
     color: #03e9f4;
-    font-size: 16px;
-    text-decoration: none;
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-decoration: underline;
     text-transform: uppercase;
     overflow: hidden;
     transition: .5s;
-    margin-top: 40px;
     letter-spacing: 4px;
 }
+
+.login-box button.btn {
+    width: 50%;
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.user-boxs {
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.button-wrapper {
+    margin-left: 10px;
+}
+
+
 
 @media (max-width: 768px) {
     .login-box {
@@ -88,6 +110,11 @@ html {
     .login-box form a {
         font-size: 14px;
         padding: 8px 16px;
+    }
+
+    .login-box button.btn {
+        font-size: 14px;
+        padding: 8px 0;
     }
 }
 
@@ -108,5 +135,10 @@ html {
     .login-box form a {
         font-size: 12px;
         padding: 6px 12px;
+    }
+
+    .login-box button.btn {
+        font-size: 12px;
+        padding: 6px 0;
     }
 }

@@ -240,10 +240,13 @@ public class WeatherShtService {
         weatherForecastList.clear();
 
         try {
+
             JSONArray jsonData = integratedService.getWeatherJsonArray(SetUrl(baseTime, vilageUrl, localDateTime));
-            JSONObject itemObject;
+
+
             for (Object data : jsonData) {
-                itemObject = (JSONObject) data;
+
+                JSONObject  itemObject = (JSONObject) data;
                 String forcastDate = (String) itemObject.get("fcstDate");
                 String forcastTime = (String) itemObject.get("fcstTime");
                 String category = (String) itemObject.get("category");
@@ -303,6 +306,7 @@ public class WeatherShtService {
 
     // API 데이터 중복체크
     private WeatherForecastAPI findExistingForecast(String fcstDate, String fcstTime) {
+
         for (WeatherForecastAPI cast : weatherForecastList) {
             if (cast.getFcstDate().equals(fcstDate) && cast.getFcstTime().equals(fcstTime)) {
                 return cast;

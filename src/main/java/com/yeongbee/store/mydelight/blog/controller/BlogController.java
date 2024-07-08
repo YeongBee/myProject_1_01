@@ -82,11 +82,16 @@ public class BlogController {
         }
     }
 
+    @GetMapping("/create")
+    @PreAuthorize("isAuthenticated()")
+    public String blogCreate(Model model) {
+        return "blog/post_form";
+    }
+
     @PreAuthorize("isAuthenticated()")
     @PostMapping("/create")
     public String blogCreate(@Validated BlogEntityDTO blogEntityDTO,
-                             BindingResult bindingResult, Principal principal){
-
+                             BindingResult bindingResult, Principal principal) {
         try {
             Account account = accountService.findByUsername(principal.getName());
 
@@ -95,23 +100,17 @@ public class BlogController {
                 return "redirect:/blog/create";
             }
 
-
             BlogEntity blog = blogService.save(blogEntityDTO, account);
-
             return "redirect:/blog/post/" + blog.getId();
 
         } catch (IOException e) {
             log.error(e.getMessage());
             return "redirect:/blog/create";
-
         }
     }
 
 
-    @GetMapping("/create")
-    public String blogCreate(Model model) {
-        return "blog/post_form";
-    }
+
 
 
 

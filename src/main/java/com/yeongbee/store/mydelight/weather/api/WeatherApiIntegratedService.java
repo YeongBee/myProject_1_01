@@ -18,9 +18,9 @@ import java.net.URL;
 @Slf4j
 public class WeatherApiIntegratedService {
 
-    public String getWeatherJson(String urlParams, String urlKey) throws IOException {
+    public String getWeatherJson(String urlParams, String urlLink) throws IOException {
 
-        URL url = new URL(urlKey + urlParams);
+        URL url = new URL(urlLink + urlParams);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
@@ -41,7 +41,6 @@ public class WeatherApiIntegratedService {
     }
 
     public JSONArray getWeatherJsonArray(String response){
-
         try {
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObject = (JSONObject) jsonParser.parse(response);

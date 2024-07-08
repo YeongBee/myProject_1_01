@@ -27,7 +27,9 @@ public class SecurityConfig {
             "/weather/list",
             "/blog/test",
             "/blog/test2",
-            "/blog/upload"
+            "/blog/upload",
+            "/checknickname",
+            "/checkusername"
     };
 
     @Bean
@@ -35,6 +37,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/blog/tests").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/blog/create").authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
                 .csrf(csrf -> Arrays.stream(ALL_PATTERNS)
                         .map(pattern -> new AntPathRequestMatcher(pattern, "POST"))
