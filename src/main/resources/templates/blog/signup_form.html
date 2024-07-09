@@ -56,13 +56,28 @@
             <div class="user-boxs">
                 <div class="input-wrapper">
                     <input type="email" name="email" id="email" required="">
-
-                    <label>email</label>
+                    <label>Email</label>
                 </div>
                 <div class="button-wrapper">
-                    <button type="submit" class="btn btn-primary">인증하기</button>
+                    <button type="button" class="btn btn-primary" id = "checkEmail">인증번호 전송</button>
                 </div>
             </div>
+            <div class="bot-div" id="emailResult"></div>
+
+        </div>
+
+        <div class="user-box">
+            <div class="user-boxs">
+                <div class="input-wrapper">
+                    <input type="text" name="emailNum" id="emailNum" required="">
+                    <label>인증 번호</label>
+                </div>
+                <div class="button-wrapper">
+                    <button type="button" class="btn btn-primary" id = "checkEmailNum">인증</button>
+                </div>
+
+            </div>
+            <div class="bot-div" id="checkNumResult"></div>
         </div>
 
 

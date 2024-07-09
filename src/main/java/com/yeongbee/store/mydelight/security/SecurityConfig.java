@@ -13,7 +13,6 @@ import org.springframework.security.web.header.writers.frameoptions.XFrameOption
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import java.util.Arrays;
-import java.util.Locale;
 
 @Configuration
 @EnableWebSecurity
@@ -29,7 +28,9 @@ public class SecurityConfig {
             "/blog/test2",
             "/blog/upload",
             "/checknickname",
-            "/checkusername"
+            "/checkusername",
+            "/checkemail",
+            "/checkmailnum"
     };
 
     @Bean
@@ -56,8 +57,6 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-
 
 
     @Bean

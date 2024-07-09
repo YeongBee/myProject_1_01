@@ -3,7 +3,7 @@ $(document).ready(function () {
         var username = $('#username').val();
         $.ajax({
             url: '/checkusername',
-            type: 'POST',
+            type: 'Get',
             data: {username: username},
             success: function (response) {
                 showNicknameResult(response, 'green', '#usernameResult');
@@ -21,7 +21,7 @@ $(document).ready(function () {
         var nickname = $('#nickname').val();
         $.ajax({
             url: '/checknickname',
-            type: 'POST',
+            type: 'Get',
             data: { nickname: nickname },
             success: function (response) {
                 showNicknameResult(response, 'green','#nicknameResult');
@@ -33,6 +33,44 @@ $(document).ready(function () {
         });
     });
 });
+
+$(document).ready(function () {
+    $('#checkEmail').click(function () {
+        var email = $('#email').val();
+        $.ajax({
+            url: '/checkemail',
+            type: 'Get',
+            data: { email: email },
+            success: function (response) {
+                showNicknameResult(response, 'green','#emailResult');
+            },
+            error: function (error) {
+                var message = getErrorMessage(error);
+                showNicknameResult(message, 'red','#emailResult');
+            }
+        });
+    });
+});
+
+$(document).ready(function () {
+    $('#checkEmailNum').click(function () {
+        var emailNum = $('#emailNum').val();
+        $.ajax({
+            url: '/checkmailnum',
+            type: 'Get',
+            data: { emailNum: emailNum },
+            success: function (response) {
+                showNicknameResult(response, 'green','#checkNumResult');
+            },
+            error: function (error) {
+                var message = getErrorMessage(error);
+                showNicknameResult(message, 'red','#checkNumResult');
+            }
+        });
+    });
+});
+
+
 
 function showNicknameResult(message, color,result) {
     $(result).text(message)
