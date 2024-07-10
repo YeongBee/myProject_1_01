@@ -89,3 +89,25 @@ function getErrorMessage(error) {
     }
 }
 
+const passwordInputs = document.querySelectorAll('.user-box input[type="password"]');
+const toggleBtns = document.querySelectorAll('.user-box .password-toggle-btn');
+
+toggleBtns.forEach((btn, index) => {
+    btn.addEventListener('click', () => {
+        const passwordInput = passwordInputs[index];
+        const eyeIcon = btn.querySelector('i');
+
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            eyeIcon.classList.remove('fa-eye');
+            eyeIcon.classList.add('fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            eyeIcon.classList.remove('fa-eye-slash');
+            eyeIcon.classList.add('fa-eye');
+        }
+    });
+});
+
+
+

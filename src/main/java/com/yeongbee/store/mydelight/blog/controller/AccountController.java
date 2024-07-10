@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @Slf4j
@@ -46,32 +47,41 @@ public class AccountController {
     }
 
     @PostMapping("/signup")
-    public String postSignup(@Validated @ModelAttribute("accountDTO") AccountDTO accountDTO, BindingResult bindingResult,Model model) {
+    public String postSignup(@Validated @ModelAttribute("accountDTO") AccountDTO accountDTO,
+                             BindingResult bindingResult,
+                             Model model) {
+
+        // 모든 경우에 accountDTO를 모델에 다시 추가
 
         String checkName = accountService.checkUsername(accountDTO.getUsername());
         String checkNickname = accountService.checkNickname(accountDTO.getNickname());
 
         if(!checkName.equals("available")){
-            model.addAttribute("error",checkName);
+            model.addAttribute("error", checkName);
             return "blog/signup_form";
         }
 
         if(!checkNickname.equals("available")){
-            model.addAttribute("error",checkNickname);
+            model.addAttribute("error", checkNickname);
+            return "blog/signup_form";
+        }
+
+
+        if(!checkNum){
+            model.addAttribute("error", "이메일 인증을 완료 해주세요");
+            return "blog/signup_form";
+        }
+
+        if(!accountDTO.getPassword1().equals(accountDTO.getPassword2())){
+            model.addAttribute("error", "비밀번호를 확인해 주세요");
             return "blog/signup_form";
         }
 
         if (bindingResult.hasErrors()) {
             log.error("오류 Account-postSignUp ={}", bindingResult.getAllErrors());
-
             return "blog/signup_form";
         }
 
-        if(!checkNum){
-            model.addAttribute("error","이메일 인증을 완료 해주세요");
-            return "blog/signup_form";
-
-        }
 
         accountService.save(accountDTO);
         return "redirect:/blog";

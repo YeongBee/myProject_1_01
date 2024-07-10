@@ -29,9 +29,9 @@ public class AccountService {
     private final JavaMailSender javaMailSender;
 
     public void save(AccountDTO accountDTO) {
-        log.info(" account pass = {}", accountDTO.getPassword());
+        log.info(" account pass = {}", accountDTO.getPassword1());
         Account account = new Account(accountDTO.getUsername(), accountDTO.getNickname(),
-                passwordEncoder.encode(accountDTO.getPassword()), accountDTO.getEmail(), HasRole.USER.getValue());
+                passwordEncoder.encode(accountDTO.getPassword1()), accountDTO.getEmail(), HasRole.USER.getValue());
         accountRepository.save(account);
     }
 

@@ -22,7 +22,11 @@ public class AccountDTO {
 
     @NotNull(message = "공백 x")
     @Size(min = 8, max = 20)
-    private String password;
+    private String password1;
+
+    @NotNull(message = "공백 x")
+    @Size(min = 8, max = 20)
+    private String password2;
 
     @Column(unique = true)
     @NotNull(message = "공백 x")
@@ -31,10 +35,11 @@ public class AccountDTO {
     public AccountDTO() {
     }
 
-    public AccountDTO(String username, String nickname, String password, String email) {
+    public AccountDTO(String username, String nickname, String password1, String password2, String email) {
         this.username = username;
         this.nickname = nickname;
-        this.password = password;
+        this.password1 = password1;
+        this.password2 = password2;
         this.email = email;
     }
 }
