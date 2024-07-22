@@ -38,6 +38,7 @@ public class SecurityConfig {
         http
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/blog/tests").hasAuthority("ROLE_ADMIN")
+                        .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/blog/create").authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
                 .csrf(csrf -> Arrays.stream(ALL_PATTERNS)

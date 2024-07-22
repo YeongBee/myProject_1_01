@@ -110,10 +110,6 @@ public class BlogController {
     }
 
 
-
-
-
-
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/modify/{id}")
     public String blogModify(Model model, @PathVariable("id") Long id, Principal principal) {

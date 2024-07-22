@@ -4,6 +4,7 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CountryResponse;
 import com.maxmind.geoip2.record.Country;
+import com.yeongbee.store.mydelight.ipconfig.adminpage.BanIpService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,9 @@ public class GeoIPService {
 
     @Autowired
     LogRepository logRepository;
+
+    @Autowired
+    BanIpService banIpService;
 
     @Autowired
     IpUtils ipUtils;
@@ -58,6 +62,8 @@ public class GeoIPService {
             return false;
         }
 
+
+
         try {
             InetAddress ipAddress = InetAddress.getByName(clientip);
             CountryResponse response = dbReader.country(ipAddress);
@@ -67,6 +73,11 @@ public class GeoIPService {
             log.info("clientip = {} , Country = {}" , clientip, countryCode);
 
             save(clientip,countryCode,countryCode.equals("KR"));
+
+            if(banIpService.findByIp(clientip)){
+                return true;
+            }
+
             return !countryCode.equals("KR");
 
         } catch (IOException | GeoIp2Exception e){
@@ -75,8 +86,6 @@ public class GeoIPService {
             return true;
         }
     }
-
-
 
     public void save(String accessPoint, String country, boolean  allow){
         AccessLog data = new AccessLog(LocalDateTime.now(), accessPoint, country, allow);

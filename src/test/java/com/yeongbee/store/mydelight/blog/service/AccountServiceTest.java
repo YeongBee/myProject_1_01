@@ -17,12 +17,15 @@ class AccountServiceTest {
 
     @Test
     void accounts(){
-        AccountDTO accountDTO = new AccountDTO("admin", "admin",
-                "0000", "google@gmail.com", "ROLE_ADMIN");
+/*        AccountDTO accountDTO = new AccountDTO("admin", "admin",
+                "admin0011", "yeongbee@yeongbee.store", "ROLE_ADMIN");*/
+
+    AccountDTO accountDTO = new AccountDTO("user", "user",
+                "user1234", "user@yeongbee.store", "ROLE_USER");
 
         accountService.save(accountDTO);
 
-        Account admin = accountService.findByUsername("admin");
+        Account admin = accountService.findByUsername("user");
 
 
         Assertions.assertThat(admin.getUsername()).isEqualTo(accountDTO.getUsername());
