@@ -7,6 +7,8 @@ import com.yeongbee.store.mydelight.blog.domain.blog.*;
 import com.yeongbee.store.mydelight.blog.domain.comment.CommentDTO;
 import com.yeongbee.store.mydelight.blog.service.AccountService;
 import com.yeongbee.store.mydelight.blog.service.BlogService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -42,6 +44,26 @@ public class BlogController {
     private final BlogService blogService;
     private final AccountService accountService;
     private final FIleStore filestore;
+
+/*    @GetMapping("")
+    public String blogMain(Model model, HttpServletRequest request) {
+        List<BlogEntity> blogList = blogService.findAll();
+        HttpSession session = request.getSession(false); //
+        Collections.reverse(blogList);
+
+        if (session != null) {
+            String sessionId = session.getId();
+            Object userAttribute = session.getAttribute("user");
+           log.info("현재 세션 ID: " + sessionId + ", 사용자: " + userAttribute);
+        } else {
+            log.info("세션 X");
+        }
+
+
+        model.addAttribute("blogList", blogList);
+
+        return "blog/blog_home";
+    }*/
 
     @GetMapping("")
     public String blogMain(Model model) {

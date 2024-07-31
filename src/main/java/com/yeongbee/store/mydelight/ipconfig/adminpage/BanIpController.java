@@ -20,6 +20,6 @@ public class BanIpController {
     @PostMapping("/admin/page/ip")
     public String adminPageSubmit(@RequestParam String ipName) {
         banIpService.save(ipName);
-        return "redirect:/admin/ip_setting";
+        return "redirect:/admin/page/ip";
     }
 }
