@@ -117,7 +117,7 @@
                         imageElement.style.objectFit = 'cover';
 
                         imageElement.addEventListener('click', function() {
-                            const imageUrl = 'http://localhost:8080/blog/images/'+fileName;
+                            const imageUrl = 'https://yeongbee.store/blog/images/'+fileName;
                             navigator.clipboard.writeText(`<img src="${imageUrl}" width="150" height="150">`);
                             alert('이미지 링크 복사 완료 : ' + fileName);
                         });

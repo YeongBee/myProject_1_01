@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -52,7 +53,7 @@ public class GeoIPService {
         dbReader = new DatabaseReader.Builder(new ClassPathResource("GeoLite2-Country.mmdb").getInputStream()).build();
 
     }
-    public boolean isBlockedCountry(HttpServletRequest request) throws IOException, GeoIp2Exception {
+    public boolean isBlockedCountry(HttpServletRequest request){
         String clientip = ipUtils.extractClientIp(request);
 //        log.info("Clientip: " + clientip);
 
@@ -72,12 +73,13 @@ public class GeoIPService {
 
             log.info("clientip = {} , Country = {}" , clientip, countryCode);
 
-            save(clientip,countryCode,countryCode.equals("KR"));
 
             if(banIpService.findByIp(clientip)){
+                save(clientip,countryCode,false);
                 return true;
             }
 
+            save(clientip,countryCode,countryCode.equals("KR"));
             return !countryCode.equals("KR");
 
         } catch (IOException | GeoIp2Exception e){

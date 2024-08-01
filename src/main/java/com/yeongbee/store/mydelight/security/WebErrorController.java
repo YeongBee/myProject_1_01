@@ -23,6 +23,6 @@ public class WebErrorController implements ErrorController {
                 return "error/error404";
             }
         }
-        return "";
+        return "error/error";
     }
 }
