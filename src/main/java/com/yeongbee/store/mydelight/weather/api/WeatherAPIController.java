@@ -42,9 +42,9 @@ public class WeatherAPIController {
         model.addAttribute("myApiEntity", myApiEntity);
         model.addAttribute("weatherSets", weatherSht);
 
-        log.info("weatherUSN={}",weatherUSN.toString());
-        log.info("weatherFive={}",fiveWeather.toString());
-        log.info("weatherSht={}",weatherSht.toString());
+//        log.info("weatherUSN={}",weatherUSN.toString());
+//        log.info("weatherFive={}",fiveWeather.toString());
+//        log.info("weatherSht={}",weatherSht.toString());
         return "weather/weather_view";
     }
 

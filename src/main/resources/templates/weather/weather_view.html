@@ -72,7 +72,7 @@
 
             <div th:if="${weatherUSN.PTY} == 0 and ${weatherFive[0].SKY} == 4 and
                 (${#strings.substring(weatherFive[0].fcstTime, 0, 2)} <= '19' and ${#strings.substring(weatherFive[0].fcstTime, 0, 2)} > '06')">
-                <i class="fa-solid fa-cloud weather-size-main cloud-gray"></i>
+                <i class="fa-solid fa-cloud cloud-gray" style="font-size: 96px"></i>
             </div>
 
             <div th:if="${weatherUSN.PTY} == 0 and ${weatherFive[0].SKY} >= 3 and
@@ -115,7 +115,7 @@
 
                 <div  class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} == 4 and
                 (${#strings.substring(result.fcstTime, 0, 2)} <= '19' and ${#strings.substring(result.fcstTime, 0, 2)} > '06')">
-                    <i class="fa-solid fa-cloud weather-size-sub cloud-gray"></i>
+                    <i class="fa-solid fa-cloud weather-size-sub cloud-gray" ></i>
                 </div>
 
                 <div  class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} >= 3 and
@@ -204,7 +204,7 @@
                     </div>
 
 
-                    <div th:if="${set.wfAm} =='흐리고 비' or ${set.wfAm} =='구름많고 비'or ${set.wfAm} =='구름많고 소나기'">
+                  <div th:if="${#strings.contains(set.wfAm, '비')} or ${#strings.contains(set.wfAm, '소나기')}">
                         <i class="fa-solid fa-cloud-showers-heavy  cloud-gray  weather-size-bot2"></i>
                     </div>
 
@@ -224,7 +224,7 @@
                         <i class="fa-solid fa-cloud  cloud-gray "></i>
                     </div>
 
-                    <div th:if="${set.wfPm} =='흐리고 비' or ${set.wfPm} =='구름많고 비'or ${set.wfPm} =='구름많고 소나기'">
+                   <div th:if="${#strings.contains(set.wfPm, '비')} or ${#strings.contains(set.wfPm, '소나기')}">
                         <i class="fa-solid fa-cloud-showers-heavy  cloud-gray  weather-size-bot2"></i>
                     </div>
                 </span>
