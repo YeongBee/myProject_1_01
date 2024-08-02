@@ -17,6 +17,6 @@ public class BanIpService {
     }
 
     public Boolean findByIp(String ip) {
-        return repository.findByIpName(ip).isPresent();
+        return repository.existsByIpName(ip);
     }
 }

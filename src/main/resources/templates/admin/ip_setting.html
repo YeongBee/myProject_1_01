@@ -42,6 +42,9 @@
                     <button type="submit" class="btn btn-primary">완료</button>
                 </div>
             </form>
+            <div th:if="${errorMessage}" class="alert alert-danger mt-3" role="alert">
+                <span th:text="${errorMessage}"></span> <!-- 오류 메시지 표시 -->
+            </div>
         </div>
     </div>
 </div>

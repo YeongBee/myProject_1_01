@@ -7,5 +7,5 @@ import java.util.Optional;
 
 @Repository
 public interface BanIpRepository extends JpaRepository<BanIp, Long> {
-    Optional<BanIp> findByIpName(String ip);
+    boolean existsByIpName(String ip);
 }
