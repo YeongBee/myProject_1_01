@@ -39,6 +39,50 @@ $(document).ready(function () {
         var email = $('#email').val();
         $.ajax({
             url: '/checkemail',
+            type: 'GET',
+            data: { email: email },
+            success: function (response) {
+                showNicknameResult(response, 'green', '#emailResult');
+
+                // 인증 번호 입력란과 인증 버튼 활성화
+                $('#emailNum').prop('disabled', false);
+                $('#checkEmailNum').prop('disabled', false);
+            },
+            error: function (error) {
+                var message = getErrorMessage(error);
+                showNicknameResult(message, 'red', '#emailResult');
+
+                // 인증 번호 입력란과 인증 버튼 비활성화
+                $('#emailNum').prop('disabled', true);
+                $('#checkEmailNum').prop('disabled', true);
+            }
+        });
+    });
+
+    $('#checkEmailNum').click(function () {
+        var emailNum = $('#emailNum').val();
+        $.ajax({
+            url: '/checkmailnum',
+            type: 'GET',
+            data: { emailNum: emailNum },
+            success: function (response) {
+                showNicknameResult(response, 'green', '#checkNumResult');
+            },
+            error: function (error) {
+                var message = getErrorMessage(error);
+                showNicknameResult(message, 'red', '#checkNumResult');
+            }
+        });
+    });
+});
+
+
+/*
+$(document).ready(function () {
+    $('#checkEmail').click(function () {
+        var email = $('#email').val();
+        $.ajax({
+            url: '/checkemail',
             type: 'Get',
             data: { email: email },
             success: function (response) {
@@ -69,6 +113,7 @@ $(document).ready(function () {
         });
     });
 });
+*/
 
 
 

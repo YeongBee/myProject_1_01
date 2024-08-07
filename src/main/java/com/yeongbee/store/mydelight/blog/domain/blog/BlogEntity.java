@@ -49,13 +49,6 @@ public class BlogEntity {
         this.account = account;
     }
 
-/*    public BlogEntity(String title, String content, LocalDateTime createdAt, Account account, List<UploadFile> uploadFiles) {
-        this.title = title;
-        this.content = content;
-        this.createdAt = createdAt;
-        this.account = account;
-        this.uploadFiles = uploadFiles;
-    }*/
 
     public BlogEntity() {}
 

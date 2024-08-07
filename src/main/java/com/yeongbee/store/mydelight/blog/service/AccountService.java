@@ -60,12 +60,15 @@ public class AccountService {
         }
     }
 
-    public String checkEmail(String email) {
-        return findByEmail(email).isPresent() ? "Email in used" :  "available";
+
+    public boolean checkEmail(String email){
+        return accountRepository.existsByEmail(email);
     }
 
 
     private static int number;
+
+
 
     public static void createNumber() {
         number = (int)(Math.random() * (90000)) + 100000; //(int) Math.random() * (최댓값-최소값+1) + 최소값
@@ -129,14 +132,6 @@ public class AccountService {
 
     public Optional<Account> findByUsernameString(String username){
         return accountRepository.findByUsername(username);
-    }
-
-    public Optional<Account> findByEmail(String email){
-        return accountRepository.findByEmail(email);
-    }
-
-    public Optional<Account> findByNickname(String nickName){
-        return accountRepository.findByNickname(nickName);
     }
 
 

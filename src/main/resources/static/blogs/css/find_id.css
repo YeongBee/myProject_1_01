@@ -3,17 +3,16 @@ html {
 }
 
 .login-box {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 90%;
-    max-width: 600px;
+    position: relative;
+    top: auto;
+    width: 100%;
     padding: 40px;
-    transform: translate(-50%, -50%);
     background: rgba(0,0,0,0.5);
+    left: auto;
+    transform: none;
     box-sizing: border-box;
     box-shadow: 0 15px 25px rgba(0,0,0,.6);
-    border-radius: 10px;
+    border-radius: 0 0 10px 10px; /* 상단 모서리는 둥글게 처리하지 않음 */
 }
 
 .login-box h2 {
@@ -96,7 +95,37 @@ html {
     margin-bottom: 20px;
 }
 
+.main-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+}
 
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: 1px solid #ccc;
+}
+
+.tab.active {
+    background-color: rgba(0,0,0,0.5);
+    color: #ffffff;
+    font-weight: bold;
+}
 
 @media (max-width: 768px) {
     .login-box {
@@ -119,6 +148,10 @@ html {
     .login-box button.btn {
         font-size: 14px;
         padding: 8px 0;
+    }
+
+    .main-container {
+        width: 80%;
     }
 }
 
@@ -144,6 +177,10 @@ html {
     .login-box button.btn {
         font-size: 12px;
         padding: 6px 0;
+    }
+
+    .main-container {
+        width: 90%;
     }
 
 }

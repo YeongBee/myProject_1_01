@@ -20,11 +20,11 @@ class AccountServiceTest {
     AccountDTO accountDTO2 = new AccountDTO("user", "user",
                 "user1234", "user1234", "user@yeongbee.store");
 
-    AccountDTO accountDTO3 = new AccountDTO("qwerqwer", "qwerqwer",
-                "qwerqwer", "qwerqwer", "qwer@yeongbee.store");
-/*
+    AccountDTO accountDTO3 = new AccountDTO("qwe", "qwer",
+                "qqqq", "qqqq", "qwer@yeongbee.store");
+
         accountService.save(accountDTO1);
-        accountService.save(accountDTO2);*/
+        accountService.save(accountDTO2);
         accountService.save(accountDTO3);
 
         Account name1 = accountService.findByUsername("admin");

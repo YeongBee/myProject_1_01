@@ -32,5 +32,9 @@ public class Account {
         this.role = role;
     }
 
+    public void updatePassword(String password) {
+        this.password = password;
+    }
+
     public Account() {}
 }

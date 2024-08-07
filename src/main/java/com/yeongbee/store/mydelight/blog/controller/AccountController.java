@@ -2,6 +2,7 @@ package com.yeongbee.store.mydelight.blog.controller;
 
 
 import com.yeongbee.store.mydelight.blog.domain.account.AccountDTO;
+import com.yeongbee.store.mydelight.blog.service.AccountFindPasswordService;
 import com.yeongbee.store.mydelight.blog.service.AccountService;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
@@ -16,10 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
@@ -29,7 +27,8 @@ public class AccountController {
 
     private final AccountService accountService;
     private String number;
-    private boolean checkNum;
+    private boolean checkNum = false;
+    private final AccountFindPasswordService findPasswordService;
 
     @GetMapping("/login")
     public String blogLogin(HttpServletRequest request) {
@@ -48,31 +47,27 @@ public class AccountController {
 
     @PostMapping("/signup")
     public String postSignup(@Validated @ModelAttribute("accountDTO") AccountDTO accountDTO,
-                             BindingResult bindingResult,
-                             Model model) {
-
-        // 모든 경우에 accountDTO를 모델에 다시 추가
+                             BindingResult bindingResult, Model model) {
 
         String checkName = accountService.checkUsername(accountDTO.getUsername());
         String checkNickname = accountService.checkNickname(accountDTO.getNickname());
 
-        if(!checkName.equals("available")){
+        if (!checkName.equals("available")) {
             model.addAttribute("error", checkName);
             return "blog/signup_form";
         }
 
-        if(!checkNickname.equals("available")){
+        if (!checkNickname.equals("available")) {
             model.addAttribute("error", checkNickname);
             return "blog/signup_form";
         }
 
-
-        if(!checkNum){
+        if (!checkNum) {
             model.addAttribute("error", "이메일 인증을 완료 해주세요");
             return "blog/signup_form";
         }
 
-        if(!accountDTO.getPassword1().equals(accountDTO.getPassword2())){
+        if (!accountDTO.getPassword1().equals(accountDTO.getPassword2())) {
             model.addAttribute("error", "비밀번호를 확인해 주세요");
             return "blog/signup_form";
         }
@@ -87,39 +82,79 @@ public class AccountController {
         return "redirect:/blog";
     }
 
+
+    // 이메일만 검증 HTML
+    //TODO
+    @GetMapping("/findid")
+    public String findId() {
+        return "blog/find_id";
+
+    }
+
+    @GetMapping("/checkfindid")
+    public ResponseEntity<String> findId(String id_email) {
+
+        String findEmail = findPasswordService.findByEmail(id_email);
+        log.info("UserEmail = {}",id_email);
+
+        return findEmail.startsWith("이메일")? ResponseEntity.badRequest().body(findEmail) :
+                ResponseEntity.ok(findEmail);
+    }
+
+
+    @GetMapping("/findpassword")
+    public ResponseEntity<String> findPassword(String pass_id, String pass_email) {
+
+        String findEmail = findPasswordService.findByEmail(number);
+
+        // Id or Email 틀릴 시
+        if(!findPasswordService.CheckUsernameEmail(pass_id, pass_email)){
+            return ResponseEntity.badRequest().body("Id 또는 Email를 확인해 주세요");
+        }
+
+        // 이메일 전송 완료 HTML
+
+        findPasswordService.TemporaryPassword(pass_id);
+        // 완료화면 HTML TODO
+        return ResponseEntity.ok("ok");
+
+
+    }
+
+
     @GetMapping("/checkusername")
-    public ResponseEntity<String> checkUsername(@RequestParam("username") String username) {
+    public ResponseEntity<String> checkUsername(String username) {
 
         String result = accountService.checkUsername(username);
 
-        return result.startsWith("Char") ? ResponseEntity.badRequest().body("Id 길이를 6글자에서 20글자 사이로 작성해 주세요"):
-                result.startsWith("Invalid") ?  ResponseEntity.badRequest().body("사용할 수 없는 문자 입니다."):
-                        result.startsWith("Id") ? ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 Id 입니다."):
+        return result.startsWith("Char") ? ResponseEntity.badRequest().body("Id 길이를 6글자에서 20글자 사이로 작성해 주세요") :
+                result.startsWith("Invalid") ? ResponseEntity.badRequest().body("사용할 수 없는 문자 입니다.") :
+                        result.startsWith("Id") ? ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 Id 입니다.") :
                                 ResponseEntity.ok("사용 가능한 Id 입니다.");
     }
 
     @GetMapping("/checknickname")
-    public ResponseEntity<String> checkNickname(@RequestParam("nickname") String nickname) {
+    public ResponseEntity<String> checkNickname(String nickname) {
 
         String result = accountService.checkNickname(nickname);
 
-        return result.startsWith("Char") ? ResponseEntity.badRequest().body("4글자에서 15글자 사이로 작성해 주세요"):
-                result.startsWith("Invalid") ? ResponseEntity.badRequest().body("사용할 수 없는 문자 입니다."):
-                        result.startsWith("Nickname") ? ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 이름 입니다."):
+        return result.startsWith("Char") ? ResponseEntity.badRequest().body("4글자에서 15글자 사이로 작성해 주세요") :
+                result.startsWith("Invalid") ? ResponseEntity.badRequest().body("사용할 수 없는 문자 입니다.") :
+                        result.startsWith("Nickname") ? ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 이름 입니다.") :
                                 ResponseEntity.ok("사용 가능한 Nickname 입니다.");
     }
 
 
     @GetMapping("/checkemail")
-    public ResponseEntity<String> checkEmail(@RequestParam("email") String email) {
+    public ResponseEntity<String> checkEmail(String email) {
 
-        if(accountService.checkEmail(email).startsWith("Email")){
+        if (accountService.checkEmail(email)) {
             return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 사용중인 이메일 입니다.");
         }
 
         number = accountService.sendMail(email);
 
-        if(number.startsWith("Failed")){
+        if (number.startsWith("Failed")) {
             return ResponseEntity.badRequest().body(number);
         } else {
             return ResponseEntity.ok("전송 완료");
@@ -127,11 +162,11 @@ public class AccountController {
     }
 
     @GetMapping("/checkmailnum")
-    public ResponseEntity<?> checkMailNum(@RequestParam("emailNum") String emailNum) {
+    public ResponseEntity<?> checkMailNum(String emailNum) {
 
         log.info("emailNum={}", emailNum);
 
-        if(emailNum.equals(number)){
+        if (emailNum.equals(number)) {
             checkNum = true;
             log.info("true");
 
@@ -143,7 +178,6 @@ public class AccountController {
             return ResponseEntity.badRequest().body("인증 번호를 확인하세요");
         }
     }
-
 
 
 }
