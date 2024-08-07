@@ -88,9 +88,7 @@ public class AccountFindPasswordService {
         Account  account = accountRepository.findByUsername(username).get();
         String userEmail = account.getEmail();
         sendMail(userEmail);
-        log.info("password 1={}", newPassword);
         String password = passwordEncoder.encode(newPassword);
-        log.info("password 2={}", password);
         account.updatePassword(password);
     }
 

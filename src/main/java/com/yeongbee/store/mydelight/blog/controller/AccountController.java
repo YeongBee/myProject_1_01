@@ -20,6 +20,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.concurrent.CompletableFuture;
+
 @Controller
 @Slf4j
 @RequiredArgsConstructor
@@ -83,19 +85,16 @@ public class AccountController {
     }
 
 
-    // 이메일만 검증 HTML
-    //TODO
     @GetMapping("/findid")
     public String findId() {
         return "blog/find_id";
-
     }
 
     @GetMapping("/checkfindid")
     public ResponseEntity<String> findId(String id_email) {
 
         String findEmail = findPasswordService.findByEmail(id_email);
-        log.info("UserEmail = {}",id_email);
+//        log.info("UserEmail = {}",id_email);
 
         return findEmail.startsWith("이메일")? ResponseEntity.badRequest().body(findEmail) :
                 ResponseEntity.ok(findEmail);
@@ -111,10 +110,11 @@ public class AccountController {
         if(!findPasswordService.CheckUsernameEmail(pass_id, pass_email)){
             return ResponseEntity.badRequest().body("Id 또는 Email를 확인해 주세요");
         }
+        // 비동기 통신
+        CompletableFuture.runAsync( () -> findPasswordService.TemporaryPassword(pass_id));
+//        findPasswordService.TemporaryPassword(pass_id);
 
-        // 이메일 전송 완료 HTML
 
-        findPasswordService.TemporaryPassword(pass_id);
         // 완료화면 HTML TODO
         return ResponseEntity.ok("ok");
 
@@ -155,7 +155,7 @@ public class AccountController {
         number = accountService.sendMail(email);
 
         if (number.startsWith("Failed")) {
-            return ResponseEntity.badRequest().body(number);
+            return ResponseEntity.badRequest().body("이메일 발송 실패");
         } else {
             return ResponseEntity.ok("전송 완료");
         }
