@@ -44,7 +44,6 @@ public class WeatherShtService {
 
 
     private final List<WeatherForecastAPI> weatherForecastList = new ArrayList<>();
-//    private final List<>
 
     @Value("${weather.sht.api}")
     private String serviceKey;
@@ -151,11 +150,9 @@ public class WeatherShtService {
             }
         }catch (NullPointerException e){
             log.error("초단기 실황 데이터는 0 ~ 6분 사이 데이터를 제공하지 않습니다.");
-            log.info("1분후 다시 시작");
+            log.warn("1분후 다시 시작");
             retryUsnInputData();
-            log.error(e.getMessage());
         }
-
 
         log.info("weatherUsn Update : {}", baseTime);
 //        log.info("weatherUsn={}", weatherUsn);
@@ -225,7 +222,7 @@ public class WeatherShtService {
 
 
         log.info("weatherShtDate={}  weatherShtTime={}", baseDate, baseTime);
-        log.info("WeatherShtService : update Size={}", weatherForecastList.size());
+//        log.info("WeatherShtService : update Size={}", weatherForecastList.size());
     }
 
 
@@ -243,7 +240,6 @@ public class WeatherShtService {
 
             JSONArray jsonData = integratedService.getWeatherJsonArray(SetUrl(baseTime, vilageUrl, localDateTime));
 
-
             for (Object data : jsonData) {
 
                 JSONObject  itemObject = (JSONObject) data;
@@ -255,7 +251,7 @@ public class WeatherShtService {
                 updateEntityFromJsonObject(weatherForecastAPI, category, value);
             }
             log.info("WeatherSht Update : {}", baseTime);
-            log.info("weatherForecastList size: " + weatherForecastList.size());
+//            log.info("weatherForecastList size: " + weatherForecastList.size());
         } catch (NullPointerException e){
             retryInputData();
         }

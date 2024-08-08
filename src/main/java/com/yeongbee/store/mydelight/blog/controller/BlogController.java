@@ -75,9 +75,14 @@ public class BlogController {
     }
 
     @GetMapping("/post/{id}")
-    public String blogPost(@PathVariable Long id, Model model, CommentDTO commentDTO) {
+    public String blogPost(@PathVariable Long id, Model model, Principal principal) {
         BlogEntity blog = blogService.findById(id);
         model.addAttribute("post", blog);
+
+        if (principal != null) {
+            model.addAttribute("currentUsername", principal.getName());
+        }
+
         return "blog/post";
     }
 

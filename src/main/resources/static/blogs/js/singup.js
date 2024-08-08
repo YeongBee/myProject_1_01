@@ -1,15 +1,17 @@
+let successColor = '#2Db400';
+
 $(document).ready(function () {
     $('#checkUsername').click(function () {
-        var username = $('#username').val();
+        let username = $('#username').val();
         $.ajax({
             url: '/checkusername',
             type: 'Get',
             data: {username: username},
             success: function (response) {
-                showNicknameResult(response, 'green', '#usernameResult');
+                showNicknameResult(response, successColor, '#usernameResult');
             },
             error: function (error) {
-                var message = getErrorMessage(error);
+                let message = getErrorMessage(error);
                 showNicknameResult(message, 'red', '#usernameResult');
             }
         });
@@ -18,106 +20,82 @@ $(document).ready(function () {
 
 $(document).ready(function () {
     $('#checkNickname').click(function () {
-        var nickname = $('#nickname').val();
+        let nickname = $('#nickname').val();
         $.ajax({
             url: '/checknickname',
             type: 'Get',
-            data: { nickname: nickname },
+            data: {nickname: nickname},
             success: function (response) {
-                showNicknameResult(response, 'green','#nicknameResult');
+                showNicknameResult(response, successColor, '#nicknameResult');
             },
             error: function (error) {
-                var message = getErrorMessage(error);
-                showNicknameResult(message, 'red','#nicknameResult');
+                let message = getErrorMessage(error);
+                showNicknameResult(message, 'red', '#nicknameResult');
             }
         });
     });
 });
 
+
 $(document).ready(function () {
     $('#checkEmail').click(function () {
-        var email = $('#email').val();
+        let email = $('#email').val();
+
+        // 로딩 인디케이터 표시
+        $('#loadingIndicator').show();
+
+        // 버튼 비활성화
+        $('#checkEmail').prop('disabled', true);
+
         $.ajax({
             url: '/checkemail',
             type: 'GET',
-            data: { email: email },
+            data: {email: email},
             success: function (response) {
-                showNicknameResult(response, 'green', '#emailResult');
+                showNicknameResult(response, successColor, '#emailResult');
 
                 // 인증 번호 입력란과 인증 버튼 활성화
                 $('#emailNum').prop('disabled', false);
                 $('#checkEmailNum').prop('disabled', false);
             },
             error: function (error) {
-                var message = getErrorMessage(error);
+                let message = getErrorMessage(error);
                 showNicknameResult(message, 'red', '#emailResult');
 
                 // 인증 번호 입력란과 인증 버튼 비활성화
                 $('#emailNum').prop('disabled', true);
                 $('#checkEmailNum').prop('disabled', true);
-            }
-        });
-    });
-
-    $('#checkEmailNum').click(function () {
-        var emailNum = $('#emailNum').val();
-        $.ajax({
-            url: '/checkmailnum',
-            type: 'GET',
-            data: { emailNum: emailNum },
-            success: function (response) {
-                showNicknameResult(response, 'green', '#checkNumResult');
             },
-            error: function (error) {
-                var message = getErrorMessage(error);
-                showNicknameResult(message, 'red', '#checkNumResult');
+            complete: function () {
+                // 로딩 인디케이터 숨김
+                $('#loadingIndicator').hide();
+
+                // 버튼 다시 활성화
+                $('#checkEmail').prop('disabled', false);
             }
         });
     });
 });
 
 
-/*
-$(document).ready(function () {
-    $('#checkEmail').click(function () {
-        var email = $('#email').val();
-        $.ajax({
-            url: '/checkemail',
-            type: 'Get',
-            data: { email: email },
-            success: function (response) {
-                showNicknameResult(response, 'green','#emailResult');
-            },
-            error: function (error) {
-                var message = getErrorMessage(error);
-                showNicknameResult(message, 'red','#emailResult');
-            }
-        });
+$('#checkEmailNum').click(function () {
+    let emailNum = $('#emailNum').val();
+    $.ajax({
+        url: '/checkmailnum',
+        type: 'GET',
+        data: {emailNum: emailNum},
+        success: function (response) {
+            showNicknameResult(response, successColor, '#checkNumResult');
+        },
+        error: function (error) {
+            let message = getErrorMessage(error);
+            showNicknameResult(message, 'red', '#checkNumResult');
+        }
     });
 });
 
-$(document).ready(function () {
-    $('#checkEmailNum').click(function () {
-        var emailNum = $('#emailNum').val();
-        $.ajax({
-            url: '/checkmailnum',
-            type: 'Get',
-            data: { emailNum: emailNum },
-            success: function (response) {
-                showNicknameResult(response, 'green','#checkNumResult');
-            },
-            error: function (error) {
-                var message = getErrorMessage(error);
-                showNicknameResult(message, 'red','#checkNumResult');
-            }
-        });
-    });
-});
-*/
 
-
-
-function showNicknameResult(message, color,result) {
+function showNicknameResult(message, color, result) {
     $(result).text(message)
         .css('color', color)
         .css('font-size', '16px')

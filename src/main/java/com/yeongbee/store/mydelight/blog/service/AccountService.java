@@ -113,12 +113,15 @@ public class AccountService {
     }
 
     public String sendMail(String mail) {
-
         if(isValid(mail) && CreateMail(mail)){
             return number+"";
         } else {
             return "Failed Send Email";
         }
+    }
+
+    public String checkNumber(){
+        return number+"";
     }
 
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";

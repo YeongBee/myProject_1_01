@@ -1,3 +1,5 @@
+let successColor = '#2Db400';
+
 $(document).ready(function () {
     $('#find_id_btn').click(function () {
         let email = $('#id_email').val();
@@ -40,7 +42,6 @@ $(document).ready(function () {
                     $('#pass_Result').html('<p>임시 비밀번호가 이메일로 전송되었습니다.</p>')
                         .css('color', 'white')
                         .css('font-size', '28px');
-                    // TODO: 완료 화면으로 이동하거나 추가 작업 수행
                 }
             },
             error: function (error) {
