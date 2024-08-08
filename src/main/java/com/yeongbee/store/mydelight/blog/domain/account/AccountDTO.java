@@ -32,6 +32,9 @@ public class AccountDTO {
     @NotNull(message = "공백 x")
     private String email;
 
+    @NotNull(message = "공백 x")
+    private String emailNum;
+
     public AccountDTO() {
     }
 

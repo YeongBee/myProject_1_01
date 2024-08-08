@@ -86,6 +86,13 @@ public class WeatherMidService {
         LocalDateTime now = LocalDateTime.now();
         String currTime = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
+        int baseTimes = Integer.parseInt(now.format(DateTimeFormatter.ofPattern("HHmm")).substring(0, 2));
+
+        String baseTime = (baseTimes >  6) && (baseTimes < 18) ? "06시" : "18시";
+
+        log.info("MidWeather BaseDate={} BaseTime={}", now.format(DateTimeFormatter.ofPattern("yyyyMMdd")), baseTime);
+
+
         String tmpUrl = setUrl(tmpApiUrl, tmpArea);
         String landUr = setUrl(landApiUrl, landArea);
         JSONObject tmpItemObject = (JSONObject) integratedService.getWeatherJsonArray(tmpUrl).get(0);
@@ -94,7 +101,7 @@ public class WeatherMidService {
         updateEntityFromJsonObject(weatherMidTmpApiEntity, tmpItemObject);
         updateEntityFromJsonObject(weatherMidLandApiEntity, landItemObject);
 
-        log.info("WeatherMidService : Update  DateTime = {}", currTime);
+        log.info("WeatherMidService Update DateTime = {}", currTime);
     }
 
 
@@ -127,12 +134,9 @@ public class WeatherMidService {
             baseDate = localDateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
             baseTime = "1800";
         } else {
-
             baseDate = localDateTime.format(DateTimeFormatter.ofPattern("yyyyMMdd"));
             baseTime = baseTimes >= 6 && baseTimes < 18 ? "0600" : "1800";
         }
-
-        log.info("MidWeather BaseDate={} BaseTime={}", baseDate,baseTime);
 
         // 06, 18시에만 업데이트가 발생함
         String urlParams = "?serviceKey=" + URLEncoder.encode(serviceKey, "UTF-8")

@@ -197,7 +197,7 @@ public class WeatherShtService {
             baseTime = "2300";
         }
 
-        log.info("baseTime : {}", baseTime);
+        log.info("ShtBaseTime : {}", baseTime);
 //        baseTime="1100";
 
         String urlParams = "?serviceKey=" + URLEncoder.encode(serviceKey, "UTF-8")

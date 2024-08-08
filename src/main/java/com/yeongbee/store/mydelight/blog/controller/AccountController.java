@@ -115,8 +115,6 @@ public class AccountController {
 
         // 비동기 통신
         CompletableFuture.runAsync(() -> findPasswordService.TemporaryPassword(pass_id));
-//        findPasswordService.TemporaryPassword(pass_id);
-        // 완료화면 HTML TODO
         return ResponseEntity.ok("ok");
     }
 
