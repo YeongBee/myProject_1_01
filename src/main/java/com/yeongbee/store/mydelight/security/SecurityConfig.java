@@ -2,6 +2,7 @@ package com.yeongbee.store.mydelight.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -38,7 +39,10 @@ public class SecurityConfig {
                         .requestMatchers("/admin/**").hasAuthority("ROLE_ADMIN")
                         .requestMatchers("/blog/create").authenticated()
                         .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-                /*    .csrf(csrf -> Arrays.stream(ALL_PATTERNS)
+                .csrf( csrf -> csrf.ignoringRequestMatchers( "/blog/upload"))
+
+//                .csrf(auth -> auth.disable())
+                  /*  .csrf(csrf -> Arrays.stream(ALL_PATTERNS)
                             .map(pattern -> new AntPathRequestMatcher(pattern, "POST"))
                             .forEach(csrf::ignoringRequestMatchers)
                     )*/

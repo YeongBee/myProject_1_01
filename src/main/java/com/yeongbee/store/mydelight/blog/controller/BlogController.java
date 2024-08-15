@@ -101,6 +101,9 @@ public class BlogController {
     public ResponseEntity<List<Map<String, String>>> uploadImageFiles(@RequestParam("imageFile") List<MultipartFile> files) {
 
         List<Map<String, String>> imageSave = blogService.imagesave(files);
+
+//        log.info("ImageSize={}", imageSave.size());
+
         if(!imageSave.isEmpty()){
             return ResponseEntity.status(HttpStatus.CREATED).body(imageSave);
         } else {
