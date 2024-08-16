@@ -1,4 +1,4 @@
-package com.yeongbee.store.mydelight.ipconfig.adminpage;
+package com.yeongbee.store.mydelight.ipconfig.adminpage.ban;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

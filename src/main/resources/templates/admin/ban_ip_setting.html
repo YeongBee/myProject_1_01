@@ -29,11 +29,12 @@
     </style>
 </head>
 <body>
+<h1 class="align-content-center">Ban IP</h1>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <h1 class="text-center mb-4">Setting</h1>
-            <form th:action="@{/admin/page/ip}" th:method="POST">
+            <form th:action="@{/admin/page/banip}" th:method="POST">
                 <div class="form-group">
                     <label for="ipName">IP 입력:</label>
                     <input type="text" id="ipName" name="ipName" class="form-control" required>

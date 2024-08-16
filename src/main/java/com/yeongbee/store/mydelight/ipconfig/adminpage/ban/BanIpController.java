@@ -1,4 +1,4 @@
-package com.yeongbee.store.mydelight.ipconfig.adminpage;
+package com.yeongbee.store.mydelight.ipconfig.adminpage.ban;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,23 +16,23 @@ public class BanIpController {
     @Autowired
     private BanIpService banIpService;
 
-    @GetMapping("/admin/page/ip")
+    @GetMapping("/admin/page/banip")
     public String adminPage(Model model) {
 
         model.asMap().forEach((key, value) -> log.info("key={}, value={}", key, value));
 
-        return "admin/ip_setting";
+        return "admin/ban_ip_setting";
     }
 
-    @PostMapping("/admin/page/ip")
+    @PostMapping("/admin/page/banip")
     public String adminPageSubmit(@RequestParam String ipName, Model model) {
         if (banIpService.findByIp(ipName)) {
             log.info("1번 controller");
             model.addAttribute("errorMessage", "이미 존재하는 IP입니다."); // 오류 메시지 추가
-            return "admin/ip_setting";
+            return "admin/ban_ip_setting";
         }
         banIpService.save(ipName);
         log.info("2번 controller");
-        return "redirect:/admin/page/ip";
+        return "redirect:/admin/page/banip";
     }
 }

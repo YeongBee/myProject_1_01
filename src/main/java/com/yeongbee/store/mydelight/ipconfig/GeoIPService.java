@@ -4,9 +4,11 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.exception.GeoIp2Exception;
 import com.maxmind.geoip2.model.CountryResponse;
 import com.maxmind.geoip2.record.Country;
-import com.yeongbee.store.mydelight.ipconfig.adminpage.BanIpService;
+import com.yeongbee.store.mydelight.ipconfig.adminpage.ban.BanIpService;
+import com.yeongbee.store.mydelight.ipconfig.allow.AllowIpService;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,49 +22,26 @@ import java.time.LocalDateTime;
 @Slf4j
 public class GeoIPService {
 
-    @Autowired
-    LogRepository logRepository;
-
-    @Autowired
-    BanIpService banIpService;
-
-    @Autowired
-    IpUtils ipUtils;
+    @Autowired private LogRepository logRepository;
+    @Autowired private AllowIpService allowIpService;
+    @Autowired private BanIpService banIpService;
+    @Autowired private IpUtils ipUtils;
 
     private DatabaseReader dbReader;
-
-    @Value("${check.access}")
-    private String checkAccess;
-
-    @Value("${check.access1}")
-    private String checkAccess1;
-
-    @Value("${check.access2}")
-    private String checkAccess2;
-
-    @Value("${check.access3}")
-    private String checkAccess3;
-
-
-
-    public GeoIPService() {}
 
 
     @PostConstruct
     public void init() throws IOException {
         dbReader = new DatabaseReader.Builder(new ClassPathResource("GeoLite2-Country.mmdb").getInputStream()).build();
-
     }
+
     public boolean isBlockedCountry(HttpServletRequest request){
         String clientip = ipUtils.extractClientIp(request);
 //        log.info("Clientip: " + clientip);
 
-
-        if(clientip.equals(checkAccess) || clientip.equals(checkAccess1) ||
-                clientip.equals(checkAccess2) ||clientip.equals(checkAccess3)){
+        if(allowIpService.findByIp(clientip)){
             return false;
         }
-
 
 
         try {
@@ -73,6 +52,15 @@ public class GeoIPService {
 
             log.info("clientip = {} , Country = {}" , clientip, countryCode);
 
+            if(clientip.startsWith("34") || clientip.startsWith("35")){
+                save(clientip,countryCode,countryCode.equals("KR"));
+                return false;
+            }
+
+            if(allowIpService.findByIp(clientip)){
+                save(clientip,"Home",true);
+                return false;
+            }
 
             if(banIpService.findByIp(clientip)){
                 save(clientip,countryCode,false);
@@ -80,10 +68,11 @@ public class GeoIPService {
             }
 
             save(clientip,countryCode,countryCode.equals("KR"));
+
             return !countryCode.equals("KR");
 
         } catch (IOException | GeoIp2Exception e){
-            log.info("Failed");
+            log.warn("Not Found Ip and Failed");
             save(clientip,"Null",false);
             return true;
         }

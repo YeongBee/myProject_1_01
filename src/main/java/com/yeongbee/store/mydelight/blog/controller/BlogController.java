@@ -30,6 +30,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.*;
@@ -87,11 +88,25 @@ public class BlogController {
     }
 
 
-    @GetMapping("/images/{filename}")
+/*    @GetMapping("/images/{filename}")
     public ResponseEntity<Resource> downloadImage(@PathVariable String filename) throws IOException {
         String fullPath = filestore.getFullPath(filename);
         MediaType mediaType = MediaType.parseMediaType(Files.probeContentType(Paths.get(fullPath)));
         UrlResource resource = new UrlResource("file:" + fullPath);
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE, mediaType.toString())
+                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+                .body(resource);
+    }*/
+
+    @GetMapping("/images/{filename}")
+    public ResponseEntity<Resource> downloadImage(@PathVariable String filename) throws IOException {
+
+        String fullPath = filestore.getFullPath(filename);
+        MediaType mediaType = MediaType.parseMediaType(Files.probeContentType(Paths.get(fullPath)));
+        UrlResource resource = new UrlResource("file:" + fullPath);
+
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_TYPE, mediaType.toString())
                 .body(resource);
@@ -104,7 +119,7 @@ public class BlogController {
 
 //        log.info("ImageSize={}", imageSave.size());
 
-        if(!imageSave.isEmpty()){
+        if (!imageSave.isEmpty()) {
             return ResponseEntity.status(HttpStatus.CREATED).body(imageSave);
         } else {
             log.error("File is null");
@@ -182,7 +197,7 @@ public class BlogController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "삭제 권한이 없습니다.");
         }
 
-            blogService.delete(id);
+        blogService.delete(id);
 
 
         return "redirect:/blog";

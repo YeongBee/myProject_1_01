@@ -1,9 +1,7 @@
-package com.yeongbee.store.mydelight.ipconfig.adminpage;
+package com.yeongbee.store.mydelight.ipconfig.adminpage.ban;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public interface BanIpRepository extends JpaRepository<BanIp, Long> {
