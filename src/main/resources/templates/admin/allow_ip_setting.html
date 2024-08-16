@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:sec="">
+<head>
+    <meta charset="UTF-8">
+    <title>Setting</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style> body {
+        padding: 20px;
+        font-family: Arial, sans-serif;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #004a99;
+    }
+    </style>
+</head>
+<body>
+<h1 class="align-content-center">Allow IP</h1>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <h1 class="text-center mb-4">Setting</h1>
+            <form th:action="@{/admin/page/allowip}" th:method="POST">
+                <div class="form-group">
+                    <label for="ipName">IP 입력:</label>
+                    <input type="text" id="ipName" name="ipName" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="ipName">설명 :</label>
+                    <input type="text" id="content" name="content" class="form-control" required>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary">완료</button>
+                </div>
+            </form>
+            <div th:if="${errorMessage}" class="alert alert-danger mt-3" role="alert">
+                <span th:text="${errorMessage}"></span> <!-- 오류 메시지 표시 -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
