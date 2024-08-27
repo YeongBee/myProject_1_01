@@ -1,8 +1,9 @@
 const posts = [
     {
         title: "소 개",
-        content: "안녕하세요. Bbot 입니다. 만나서 반가워요! \n\n" +
-            "<a href='https://discord.com/oauth2/authorize?client_id=1272408626174365827&permissions=8&integration_type=0&scope=bot' target='_blank'>봇 추가하기</a>"
+        content: "안녕하세요. Bbot 입니다. 만나서 반가워요! \n" +
+            "저는 주로 메이플스토리의 게임 API를 활용하여 얻을 수 있는 정보를 가지고 있습니다.\n\n"+
+            "<a href='https://discord.com/oauth2/authorize?client_id=1272408626174365827&permissions=8&integration_type=0&scope=bot' target='_blank' class = 'custom-link'>봇 추가하기</a>"
     },
     {
         title: "사용법",

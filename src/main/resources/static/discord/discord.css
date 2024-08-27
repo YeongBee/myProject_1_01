@@ -94,4 +94,13 @@ p {
     /*background-color: #0A0A2A;*/
 }
 
+.custom-link {
+    color: #00FF00; /* 원하는 색상 */
+    text-decoration: none; /* 밑줄 없애기 */
+}
+
+.custom-link:hover {
+    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
+}
+
 
