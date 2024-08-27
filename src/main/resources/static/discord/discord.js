@@ -1,7 +1,8 @@
 const posts = [
     {
-        title: "소 개", content: "안녕하세요. Bbot 입니다.   " +
-            "만나서 반가워요!"
+        title: "소 개",
+        content: "안녕하세요. Bbot 입니다. 만나서 반가워요! \n\n" +
+            "<a href='https://discord.com/oauth2/authorize?client_id=1272408626174365827&permissions=8&integration_type=0&scope=bot' target='_blank'>봇 추가하기</a>"
     },
     {
         title: "사용법",
