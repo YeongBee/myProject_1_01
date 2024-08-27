@@ -30,7 +30,8 @@ public class GeoIPFilter implements Filter{
 //        log.info("path={}", path);
 
         //TODO static 폴더만 줄일 수 있을까?
-        if (path.startsWith("/my")|| path.startsWith("/blogs")||path.startsWith("/errors")||path.startsWith("favicon")) {
+        if (path.startsWith("/my")|| path.startsWith("/blogs")||path.startsWith("/errors")||
+                path.startsWith("favicon")|| path.startsWith("discord")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
         }
