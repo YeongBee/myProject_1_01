@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DiscordBot</title>
+    <link href="/discord/discord.css" rel="stylesheet"/>
+</head>
+<body>
+<div class="container">
+    <div class="content-wrapper">
+        <div class="menu">
+            <h2>목 차</h2>
+            <ul id="postList">
+                <li onclick="showContent(1, this)">소 개</li>
+                <li onclick="showContent(2, this)">사용법</li>
+                <li onclick="showContent(3, this)">제작자</li>
+            </ul>
+        </div>
+        <div class="content">
+            <div class="content-inner" id="contentArea"></div>
+        </div>
+    </div>
+</div>
+
+<script src="/discord/discord.js"></script>
+</body>
+</html>
