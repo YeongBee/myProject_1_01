@@ -1,9 +1,11 @@
 body, html {
     height: 100%;
     margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #0A0E2D;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: #1a1a2e;
+    color: #e0e0e0;
 }
+
 .container {
     display: flex;
     justify-content: center;
@@ -12,95 +14,91 @@ body, html {
     padding: 10px;
     box-sizing: border-box;
 }
+
 .content-wrapper {
     display: flex;
     width: 90%;
     height: 85%;
-    background-color: #0A0A2A;
-    border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    background-color: #16213e;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
 }
+
 .menu {
-    width: 200px;
-    padding: 10% 0 0 0;
+    width: 220px;
+    padding: 8% 0 0 0;
     flex-shrink: 0;
-    border-right: 1px solid #e0e0e0;
+    border-right: 1px solid #2a324b;
     overflow-y: auto;
 }
+
 .content {
     flex-grow: 1;
-    padding: 10% 10% 0 10%;
+    padding: 8% 8% 0 8%;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
 }
+
 .content-inner {
-    min-height: 300px; /* 최소 높이 설정 */
-    max-height: 100%; /* 최대 높이를 부모 요소에 맞춤 */
-    overflow-y: auto; /* 내용이 넘칠 경우 스크롤 생성 */
+    min-height: 300px;
+    max-height: 100%;
+    overflow-y: auto;
 }
+
 ul {
     list-style-type: none;
-    padding: 20% 10px 0 0;
-    /*padding: 0;*/
+    padding: 15% 15px 0 0;
     margin: 0;
 }
+
 li {
     cursor: pointer;
-    padding: 8px;
-    margin-bottom: 3px;
-    border-radius: 4px;
-    transition: background-color 0.3s;
+    padding: 12px;
+    margin-bottom: 5px;
+    border-radius: 6px;
+    transition: background-color 0.3s, color 0.3s;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-
-    font-weight: bold;
-    color: #D4AF37;
-
+    font-weight: 500;
+    color: #8a8d91;
 }
+
 li:hover {
-    background-color: #e0e0e0;
+    background-color: #2a324b;
+    color: #ffffff;
 }
+
 li.selected {
-    background-color: #d3d3d3;
+    background-color: #0f3460;
+    color: #ffffff;
 }
 
 h2 {
     margin-top: 0;
     margin-bottom: 10%;
-    color: #D4AF37;
-    font-size: 40px;
+    margin-left: 10px;
+    color: #FFD700;
+    font-size: 32px;
     font-weight: bold;
-    text-shadow:
-            1px 1px 0 #272727,
-            -1px -1px 0 #272727,
-            1px -1px 0 #272727,
-            -1px 1px 0 #272727;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
 
 p {
-    color: #D4AF37;
-    text-shadow:
-            1px 1px 0 #272727,
-            -1px -1px 0 #272727,
-            1px -1px 0 #272727,
-            -1px 1px 0 #272727;
-    font-size: 20px;
-    font-weight: bold;
-
-
-    /*background-color: #0A0E2D;*/
-    /*background-color: #0A0A2A;*/
+    color: #b8b8b8;
+    font-size: 18px;
+    font-weight: normal;
+    line-height: 1.6;
 }
 
 .custom-link {
-    color: #00FF00; /* 원하는 색상 */
-    text-decoration: none; /* 밑줄 없애기 */
+    color: #4cc9f0;
+    text-decoration: none;
+    transition: color 0.3s;
 }
 
 .custom-link:hover {
-    text-decoration: underline; /* 마우스 오버 시 밑줄 추가 */
+    color: #7ee8fa;
+    text-decoration: underline;
 }
-
-
