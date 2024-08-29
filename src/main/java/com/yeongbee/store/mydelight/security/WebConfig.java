@@ -19,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(requestLoggingInterceptor)
-                .excludePathPatterns("/blogs", "/my", "/errors"); // 인터셉터 등록
+                .excludePathPatterns("/blogs", "/my", "/errors", "/discords/**"); // 인터셉터 등록
     }
 
   /*  @Override

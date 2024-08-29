@@ -43,7 +43,6 @@ public class GeoIPService {
             return false;
         }
 
-
         try {
             InetAddress ipAddress = InetAddress.getByName(clientip);
             CountryResponse response = dbReader.country(ipAddress);
