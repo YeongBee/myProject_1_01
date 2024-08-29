@@ -8,6 +8,6 @@ public class DiscordController {
 
     @GetMapping("/discord")
     public String discord() {
-        return "/discord/discord_main";
+        return "discord/discordmain";
     }
 }
