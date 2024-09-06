@@ -34,7 +34,7 @@ public class WeatherMyApiService {
 
 
     @PostConstruct
-    @Scheduled(cron = "0 0,15,30,45 * * * ?")
+    @Scheduled(cron = "0 0,30 * * * ?")
 //    @Scheduled(fixedRate = 1000)
     public void save() throws UnsupportedEncodingException {
 

@@ -2,6 +2,8 @@ package com.yeongbee.store.mydelight.weather.api;
 
 
 import com.yeongbee.store.mydelight.weather.myapi.WeatherMyApiEntity;
+import com.yeongbee.store.mydelight.weather.myapi.WeatherMyApiEntityExternal;
+import com.yeongbee.store.mydelight.weather.myapi.WeatherMyApiExternalService;
 import com.yeongbee.store.mydelight.weather.myapi.WeatherMyApiService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +28,7 @@ public class WeatherAPIController {
     private final WeatherShtService shtService;
     private final WeatherMidService midService;
     private final WeatherMyApiService myApiService;
+    private final WeatherMyApiExternalService myApiExternalService;
 
     @GetMapping("")
     public String weatherShows(Model model) {
@@ -35,16 +38,19 @@ public class WeatherAPIController {
         WeatherUSN weatherUSN = shtService.getWeatherUsn();
         List<WeatherForecastAPI> fiveWeather = shtService.getShtFiveWeather();
         WeatherMyApiEntity myApiEntity = myApiService.findLatestData();
+        WeatherMyApiEntityExternal myApiEntityExternal = myApiExternalService.findLatestData();
 
 
         model.addAttribute("weatherUSN", weatherUSN);
         model.addAttribute("weatherFive", fiveWeather);
         model.addAttribute("myApiEntity", myApiEntity);
         model.addAttribute("weatherSets", weatherSht);
+        model.addAttribute("weatherExternal", myApiEntityExternal);
 
 //        log.info("weatherUSN={}",weatherUSN.toString());
 //        log.info("weatherFive={}",fiveWeather.toString());
 //        log.info("weatherSht={}",weatherSht.toString());
+        log.info("myApiEntityExternal={}",myApiEntityExternal.toString());
         return "weather/weather_view";
     }
 
