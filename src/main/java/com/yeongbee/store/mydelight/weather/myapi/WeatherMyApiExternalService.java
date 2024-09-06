@@ -25,7 +25,7 @@ public class WeatherMyApiExternalService {
     private final WeatherMyApiExternalRepository weatherMyApiExternalRepository;
     private final RestTemplate restTemplate;
 
-    @Value("${weather.my.api}")
+    @Value("${weather.my.api.external}")
     private String url;
 
 
