@@ -50,7 +50,7 @@ public class WeatherAPIController {
 //        log.info("weatherUSN={}",weatherUSN.toString());
 //        log.info("weatherFive={}",fiveWeather.toString());
 //        log.info("weatherSht={}",weatherSht.toString());
-        log.info("myApiEntityExternal={}",myApiEntityExternal.toString());
+//        log.info("myApiEntityExternal={}",myApiEntityExternal.toString());
         return "weather/weather_view";
     }
 

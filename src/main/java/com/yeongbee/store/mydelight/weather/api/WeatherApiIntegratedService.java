@@ -49,6 +49,7 @@ public class WeatherApiIntegratedService {
             JSONObject itemsObject = (JSONObject) bodyObject.get("items");
             return (JSONArray) itemsObject.get("item");
         } catch (ParseException e){
+            log.warn("Json error");
             return null;
         }
     }

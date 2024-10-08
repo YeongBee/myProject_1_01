@@ -48,11 +48,9 @@ public class WeatherMyApiService {
             log.info("weatherMyAPIService Success");
 
         } catch (NullPointerException e) {
-            e.printStackTrace();
             log.error("WeatherMyApi is NULL");
             log.error("weatherService Failed");
         }catch (Exception e){
-            e.printStackTrace();
             log.error("WeatherMyAPI Exception = {}", e.getMessage());
         }
 
@@ -63,8 +61,7 @@ public class WeatherMyApiService {
             Optional<WeatherMyApiEntity> optional = weatherMyApiRepository.findLatestWeatherData();
             return optional.orElseGet(WeatherMyApiEntity::new);
         } catch (Exception e){
-            e.printStackTrace();
-            log.error(e.getMessage());
+            log.error("첫번째 데이터 불러오기 실패");
         }
 
      return null;

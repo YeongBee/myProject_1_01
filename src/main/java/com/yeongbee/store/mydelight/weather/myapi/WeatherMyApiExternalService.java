@@ -48,7 +48,6 @@ public class WeatherMyApiExternalService {
             log.error("WeatherMyApiExternal is NULL");
             log.error("weatherExternalService Failed");
         }catch (Exception e){
-            e.printStackTrace();
             log.error("WeatherMyAPIExternal Exception = {}", e.getMessage());
         }
 
@@ -76,6 +75,4 @@ public class WeatherMyApiExternalService {
         Pageable pageable = PageRequest.of(page, 15, Sort.by("localDateTime").descending());
         return weatherMyApiExternalRepository.findWeatherMyApiEntityByLocalDateTimeBetween(start, end, pageable);
     }
-
-
 }
