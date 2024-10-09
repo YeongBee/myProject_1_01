@@ -56,7 +56,7 @@ public class WeatherAPIController {
 
 
     @GetMapping("/list")
-    public String getTest(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+    public String getList(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
                           @RequestParam(value = "startDate", required = false) LocalDate startDate,
                           @RequestParam(value = "endDate", required = false) LocalDate endDate) {
 
@@ -79,6 +79,32 @@ public class WeatherAPIController {
 
 
         return "weather/weather_list";
+    }
+
+    @GetMapping("/listExternal")
+    public String getListExternal(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+                          @RequestParam(value = "startDate", required = false) LocalDate startDate,
+                          @RequestParam(value = "endDate", required = false) LocalDate endDate) {
+
+        Page<WeatherMyApiEntityExternal> selectList;
+
+        if (startDate != null && endDate != null) {
+
+            LocalDateTime startDateTime = startDate.atStartOfDay();
+            LocalDateTime endDateTime = endDate.atStartOfDay();
+            selectList = myApiExternalService.findByBetween(startDateTime, endDateTime, page);
+
+        } else {
+            selectList = myApiExternalService.findAll(page);
+        }
+
+
+        model.addAttribute("selectList", selectList);
+        model.addAttribute("startDate", startDate);
+        model.addAttribute("endDate", endDate);
+
+
+        return "weather/weather_list_external";
     }
 
 }

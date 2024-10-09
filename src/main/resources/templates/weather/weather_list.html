@@ -42,7 +42,7 @@
                     <th class="px-4 py-3">시간</th>
                     <th class="px-4 py-3">온도</th>
                     <th class="px-4 py-3">습도</th>
-<!--                    <th class="px-4 py-3">토양</th>-->
+                    <th class="px-4 py-3">토양</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -51,7 +51,7 @@
                     <td class="px-4 py-3" th:text="${#temporals.format(one.localDateTime, 'HH:mm:ss')}"></td>
                     <td class="px-4 py-3" th:text="${one.temperature}"></td>
                     <td class="px-4 py-3" th:text="${one.humidity}"></td>
-<!--                    <td class="px-4 py-3" th:text="${one.soilMoisture}"></td>-->
+                    <td class="px-4 py-3" th:text="${one.soilMoisture}"></td>
                 </tr>
                 </tbody>
             </table>
