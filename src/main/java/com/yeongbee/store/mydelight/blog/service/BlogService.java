@@ -2,10 +2,12 @@ package com.yeongbee.store.mydelight.blog.service;
 
 import com.yeongbee.store.mydelight.blog.domain.FIleStore;
 import com.yeongbee.store.mydelight.blog.domain.account.Account;
+import com.yeongbee.store.mydelight.blog.domain.account.AccountDTO;
 import com.yeongbee.store.mydelight.blog.domain.blog.BlogEntity;
 import com.yeongbee.store.mydelight.blog.domain.blog.BlogEntityDTO;
 import com.yeongbee.store.mydelight.blog.domain.blog.ImageFile;
 import com.yeongbee.store.mydelight.blog.domain.blog.UploadFile;
+import com.yeongbee.store.mydelight.blog.repository.AccountRepository;
 import com.yeongbee.store.mydelight.blog.repository.BlogRepository;
 import com.yeongbee.store.mydelight.blog.repository.ImageRepository;
 import jakarta.transaction.Transactional;
@@ -28,6 +30,7 @@ public class BlogService {
     private final BlogRepository blogRepository;
     private final ImageRepository imageRepository;
     private final FIleStore filestore;
+    private final AccountRepository accountRepository;
 
 
     @Transactional
@@ -48,10 +51,6 @@ public class BlogService {
 
         BlogEntity blogEntity = new BlogEntity(blogEntityDTO.getTitle(),blogEntityDTO.getContent(),
                 LocalDateTime.now(),account);
-
-
-
-
         return blogRepository.save(blogEntity);
     }
 
@@ -124,5 +123,7 @@ public class BlogService {
         blogRepository.deleteById(id);
     }
 
-
+   public List<BlogEntity> findByAccount(Account account) {
+        return blogRepository.findByAccount(account);
+   }
 }
