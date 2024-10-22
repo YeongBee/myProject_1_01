@@ -1,0 +1,167 @@
+html {
+    height: 100%;
+}
+
+.login-box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 90%;
+    max-width: 600px;
+    padding: 40px;
+    transform: translate(-50%, -50%);
+    background: rgba(0,0,0,0.5);
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 10px;
+}
+
+.login-box h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+}
+
+.login-box .user-box {
+    position: relative;
+}
+
+.login-box .user-box input {
+    width: 100%;
+    padding: 20px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 10px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.login-box .user-box label {
+    position: absolute;
+    top:0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.login-box form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    letter-spacing: 4px;
+}
+
+.login-box button.btn {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.user-boxs {
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.button-wrapper {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.button-wrapper .spinner {
+    margin-left: 10px;
+}
+
+.spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 1s linear infinite;
+}
+
+.bot-div{
+    margin-bottom: 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@media (max-width: 768px) {
+    .login-box {
+        width: 80%;
+    }
+
+    .login-box h2 {
+        font-size: 24px;
+    }
+
+    .login-box .user-box input {
+        font-size: 14px;
+    }
+
+    .login-box form a {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .login-box button.btn {
+        font-size: 14px;
+        padding: 8px 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-box {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .login-box h2 {
+        font-size: 20px;
+    }
+
+    .login-box .user-box input {
+        font-size: 12px;
+    }
+
+    .login-box form a {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .login-box button.btn {
+        font-size: 12px;
+        padding: 6px 0;
+    }
+
+}

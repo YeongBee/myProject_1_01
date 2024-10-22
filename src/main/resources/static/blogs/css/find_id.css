@@ -1,0 +1,186 @@
+html {
+    height: 100%;
+}
+
+.login-box {
+    position: relative;
+    top: auto;
+    width: 100%;
+    padding: 40px;
+    background: rgba(0,0,0,0.5);
+    left: auto;
+    transform: none;
+    box-sizing: border-box;
+    box-shadow: 0 15px 25px rgba(0,0,0,.6);
+    border-radius: 0 0 10px 10px; /* 상단 모서리는 둥글게 처리하지 않음 */
+}
+
+.login-box h2 {
+    margin: 0 0 30px;
+    padding: 0;
+    color: #fff;
+    text-align: center;
+}
+
+.login-box .user-box {
+    position: relative;
+}
+
+.login-box .user-box input {
+    width: 100%;
+    padding: 20px 0;
+    font-size: 16px;
+    color: #fff;
+    margin-bottom: 10px;
+    border: none;
+    border-bottom: 1px solid #fff;
+    outline: none;
+    background: transparent;
+}
+
+.login-box .user-box label {
+    position: absolute;
+    top:0;
+    left: 0;
+    padding: 10px 0;
+    font-size: 16px;
+    color: #fff;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.login-box .user-box input:focus ~ label,
+.login-box .user-box input:valid ~ label {
+    top: -20px;
+    left: 0;
+    color: #03e9f4;
+    font-size: 12px;
+}
+
+.login-box form a {
+    position: relative;
+    display: inline-block;
+    padding: 10px 20px;
+    color: #03e9f4;
+    font-size: 12px;
+    margin-bottom: 10px;
+    text-decoration: underline;
+    text-transform: uppercase;
+    overflow: hidden;
+    transition: .5s;
+    letter-spacing: 4px;
+}
+
+.login-box button.btn {
+    width: 100%;
+    font-size: 16px;
+    padding: 10px 0;
+}
+
+.user-boxs {
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper {
+    flex: 1;
+    position: relative;
+}
+
+.button-wrapper {
+    margin-left: 10px;
+}
+
+.bot-div{
+    margin-bottom: 20px;
+}
+
+.main-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    max-width: 600px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0px;
+    width: 100%;
+}
+
+.tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    background-color: #f0f0f0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    border: 1px solid #ccc;
+}
+
+.tab.active {
+    background-color: rgba(0,0,0,0.5);
+    color: #ffffff;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .login-box {
+        width: 80%;
+    }
+
+    .login-box h2 {
+        font-size: 24px;
+    }
+
+    .login-box .user-box input {
+        font-size: 14px;
+    }
+
+    .login-box form a {
+        font-size: 14px;
+        padding: 8px 16px;
+    }
+
+    .login-box button.btn {
+        font-size: 14px;
+        padding: 8px 0;
+    }
+
+    .main-container {
+        width: 80%;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-box {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .login-box h2 {
+        font-size: 20px;
+    }
+
+    .login-box .user-box input {
+        font-size: 12px;
+    }
+
+    .login-box form a {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+
+    .login-box button.btn {
+        font-size: 12px;
+        padding: 6px 0;
+    }
+
+    .main-container {
+        width: 90%;
+    }
+
+}
