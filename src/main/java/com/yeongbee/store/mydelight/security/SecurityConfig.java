@@ -31,9 +31,11 @@ public class SecurityConfig {
             /*"/login",*/
             "/weather/api",
             "/weather/list",
+            "/weather/listExternal",
             "/blog/test",
             "/blog/test2",
             "/blog/upload",
+            "/page/**",
     };
 
     @Bean

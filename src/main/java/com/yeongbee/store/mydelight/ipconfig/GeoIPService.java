@@ -37,7 +37,7 @@ public class GeoIPService {
 
     public boolean isBlockedCountry(HttpServletRequest request){
         String clientip = ipUtils.extractClientIp(request);
-        log.info("Clientip: " + clientip);
+//        log.info("Clientip: " + clientip);
 
         if(allowIpService.findByIp(clientip)){
             return false;
