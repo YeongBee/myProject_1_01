@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Create New Content</title>
+  <style>
+    textarea {
+      width: 100%;
+      min-height: 200px;
+      resize: vertical;
+    }
+  </style>
+</head>
+<body>
+<h1>Create New Content</h1>
+
+<form th:action="@{/page/my-edit}" method="post">
+  <div>
+    <label for="title">Title:</label>
+    <input type="text" id="title" name="title" required>
+  </div>
+  <div>
+    <label for="content">Content:</label>
+    <textarea id="content" name="content" required></textarea>
+  </div>
+  <button type="submit">Save</button>
+</form>
+
+<a th:href="@{/page/my}">Back to My Contents</a>
+</body>
+</html>

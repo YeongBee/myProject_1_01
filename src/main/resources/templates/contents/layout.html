@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>콘텐츠 관리</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a class="navbar-brand" href="#">콘텐츠 관리</a>
+  <div class="navbar-nav">
+    <a class="nav-item nav-link" th:href="@{/page/my}">내 콘텐츠</a>
+    <a class="nav-item nav-link" th:href="@{/page/my-edit}">콘텐츠 작성</a>
+  </div>
+</nav>
+
+<div class="container mt-4">
+  <div th:replace="${content}">
+    <!-- 각 페이지의 내용이 여기에 들어갑니다 -->
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>
