@@ -1,5 +1,6 @@
 package com.yeongbee.store.mydelight.blog.domain.account;
 
+import com.yeongbee.store.mydelight.blog.domain.blog.BlogEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 

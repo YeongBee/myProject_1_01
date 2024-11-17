@@ -24,7 +24,6 @@
             <a class="navbar-brand" sec:authorize="isAnonymous()" href="/login">Login</a>
             <a class="navbar-brand" sec:authorize="isAuthenticated()" href="/blog/create">create</a>
             <a class="navbar-brand" sec:authorize="isAuthenticated()" href="/logout">LogOut</a>
-            <a class="navbar-brand" sec:authorize="isAuthenticated()" href="/blog/my/log">My Log</a>
         </div>
     </div>
 </nav>
@@ -35,8 +34,7 @@
         <div class="row gx-4 gx-lg-5 justify-content-center">
             <div class="col-md-10 col-lg-8 col-xl-7">
                 <div class="site-heading">
-                    <h1>Board</h1>
-<!--                    <span class="subheading">잡다한 공간</span>-->
+                    <h1>My Log</h1>
                 </div>
             </div>
         </div>
@@ -50,18 +48,13 @@
             <!-- 게시글 목록을 동적으로 표시 -->
             <div th:each="post : ${blogList}" class="post-preview my-spacing">
                 <a th:href="@{/blog/post/{id}(id=${post.id})}">
-                    <h3 class="post-title" th:text="${post.title}">제목</h3>
+                    <h3 class="post-title" style="font-size: 1.4rem" th:text="${post.title}">제목</h3>
                 </a>
-                <p class="post-meta">
-                    Posted by
-                    <span th:utext="${post.account.nickname}"></span>
+                <p class="post-meta" style="font-size: 1rem">
                     <span th:text="${#temporals.format(post.createdAt, 'yyyy-MM-dd HH:mm')}">Date</span>
                 </p>
-                <hr class="my-4"/>
+                <hr class="my-2"/>
             </div>
-       <!--     <div class="d-flex justify-content-end mb-4">
-                <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
-            </div>-->
         </div>
     </div>
 </div>

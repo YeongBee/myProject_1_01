@@ -26,7 +26,7 @@ public class GeoIPFilter implements Filter{
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
 
-/*        String path = request.getRequestURI().substring(request.getContextPath().length());
+      String path = request.getRequestURI().substring(request.getContextPath().length());
 //        log.info("path={}", path);
 
         //TODO static 폴더만 줄일 수 있을까?
@@ -34,7 +34,7 @@ public class GeoIPFilter implements Filter{
                 path.startsWith("favicon") || path.startsWith("/discords")) {
             filterChain.doFilter(servletRequest, servletResponse);
             return;
-        }*/
+        }
 
         try {
             if (geoIPService.isBlockedCountry(request)) {

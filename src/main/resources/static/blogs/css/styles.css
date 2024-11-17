@@ -10741,8 +10741,8 @@ header.masthead .post-heading .meta a {
 }
 @media (min-width: 992px) {
   header.masthead {
-    padding-top: 12.5rem;
-    padding-bottom: 12.5rem;
+    padding-top: 7.5rem;
+    padding-bottom: 7.5rem;
   }
   header.masthead .page-heading h1, header.masthead .page-heading .h1,
   header.masthead .site-heading h1,
@@ -10780,7 +10780,7 @@ header.masthead .post-heading .meta a {
   color: #0085A1;
 }
 .post-preview > a > .post-title {
-  font-size: 1.875rem;
+  font-size: 1.575rem;
   margin-top: 1.875rem;
   margin-bottom: 0.625rem;
   font-weight: 600;
@@ -10790,7 +10790,7 @@ header.masthead .post-heading .meta a {
   margin-bottom: 0.625rem;
 }
 .post-preview > .post-meta {
-  font-size: 1.125rem;
+  font-size: 1.025rem;
   font-style: italic;
   margin-top: 0;
   color: #6c757d;
@@ -10800,7 +10800,7 @@ header.masthead .post-heading .meta a {
 }
 @media (min-width: 992px) {
   .post-preview > a > .post-title {
-    font-size: 2.2rem;
+    font-size: 2.25rem;
   }
 }
 

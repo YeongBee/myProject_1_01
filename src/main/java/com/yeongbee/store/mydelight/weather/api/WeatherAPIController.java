@@ -81,7 +81,7 @@ public class WeatherAPIController {
         return "weather/weather_list";
     }
 
-    @GetMapping("/listExternal")
+    @GetMapping("/list-external")
     public String getListExternal(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
                           @RequestParam(value = "startDate", required = false) LocalDate startDate,
                           @RequestParam(value = "endDate", required = false) LocalDate endDate) {

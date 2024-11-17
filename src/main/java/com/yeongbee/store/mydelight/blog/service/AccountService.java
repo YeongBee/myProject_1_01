@@ -140,7 +140,13 @@ public class AccountService {
 
     public Account findByUsername(String username) {
         return accountRepository.findByUsername(username).orElseThrow(
-                () -> new NoSuchElementException("Account with username " + username + " not found")
+                () -> new NoSuchElementException("Account with username : " + username + " not found")
+        );
+    }
+
+    public Account findByNickname(String nickname){
+        return accountRepository.findByNickname(nickname).orElseThrow(
+                () -> new NoSuchElementException("Account with nickname : " + nickname + " not found")
         );
     }
 

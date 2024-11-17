@@ -202,6 +202,30 @@ public class BlogController {
 
         return "redirect:/blog";
     }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/my/log")
+    public String myLog(Principal principal, Model model) {
+
+
+
+        // 닉네임으로 Account 찾기
+        Account account = accountService.findByUsername(principal.getName());
+
+        if (account == null) {
+            log.error("사용자를 찾을 수 없습니다.");
+            return "redirect:/blog";
+        }
+
+        //TODO 블로그 username 기준으로 불러오기
+        
+        List<BlogEntity> blogList = blogService.findByAccount(account);
+        Collections.reverse(blogList);
+
+        model.addAttribute("blogList", blogList);
+
+        return "/blog/my_log";
+    }
 }
 
 
