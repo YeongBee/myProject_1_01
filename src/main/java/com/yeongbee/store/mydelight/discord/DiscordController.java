@@ -6,8 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class DiscordController {
 
-    @GetMapping("/discord")
+//    @GetMapping("/discord")
     public String discord() {
-        return "discord/discordmain";
+        return "discord/discord_main";
+    }
+
+    @GetMapping("/discord")
+    public String discordPage() {
+        return "discord/fix_page";
     }
 }
