@@ -52,6 +52,7 @@ public class WeatherMidService {
 
     public List<WeatherSetEntity> getWeatherMidSet(){
         List<WeatherSetEntity> weatherList = new ArrayList<>();
+
         weatherList.add(new WeatherSetEntity(
                 weatherMidLandApiEntity.getRnSt3Am(),
                 weatherMidLandApiEntity.getRnSt3Pm(), weatherMidTmpApiEntity.getTaMin3(),

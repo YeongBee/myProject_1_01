@@ -13,6 +13,7 @@
             color: #bdbdbd;
 
         }
+
         .weather-moon {
             color: #1034A6
         }
@@ -25,7 +26,7 @@
             font-size: 36px;
         }
 
-        .weather-size-bot{
+        .weather-size-bot {
             font-size: 24px;
         }
 
@@ -33,7 +34,7 @@
             font-size: 23px;
         }
 
-        .weather-size-bot2{
+        .weather-size-bot2 {
             font-size: 28px;
         }
 
@@ -98,37 +99,37 @@
                  th:if="${iterStat.index > 0}">
                 <span class="font-semibold text-lg" th:text="${result.TMP}+'°C'"></span>
 
-                <div  class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} == 1 and
+                <div class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} == 1 and
             (${#strings.substring(result.fcstTime, 0, 2)} <= '19' and ${#strings.substring(result.fcstTime, 0, 2)} > '06')">
                     <i class="wi wi-day-sunny text-yellow-400 weather-size-sub"></i>
                 </div>
 
-                <div  class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} == 1 and
+                <div class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} == 1 and
                 (${#strings.substring(result.fcstTime, 0, 2)} > '19' or ${#strings.substring(result.fcstTime, 0, 2)} <= '06')">
                     <i class="fa-solid fa-moon weather-moon weather-size-sub"></i>
                 </div>
 
-                <div  class="mt-4"th:if="${result.PTY} == 0 and ${result.SKY} == 3 and
+                <div class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} == 3 and
                 (${#strings.substring(result.fcstTime, 0, 2)} <= '19' and ${#strings.substring(result.fcstTime, 0, 2)} > '06')">
                     <i class="fa-solid fa-cloud-sun weather-size-sub cloud-gray"></i>
                 </div>
 
-                <div  class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} == 4 and
+                <div class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} == 4 and
                 (${#strings.substring(result.fcstTime, 0, 2)} <= '19' and ${#strings.substring(result.fcstTime, 0, 2)} > '06')">
-                    <i class="fa-solid fa-cloud weather-size-sub cloud-gray" ></i>
+                    <i class="fa-solid fa-cloud weather-size-sub cloud-gray"></i>
                 </div>
 
-                <div  class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} >= 3 and
+                <div class="mt-4" th:if="${result.PTY} == 0 and ${result.SKY} >= 3 and
                 (${#strings.substring(result.fcstTime, 0, 2)} > '19' or ${#strings.substring(result.fcstTime, 0, 2)} <= '06')">
                     <i class="fa-solid fa-cloud-moon weather-moon weather-size-sub"></i>
                 </div>
 
-                <div  class="mt-4" th:if="${result.PTY} >= 1 and ${result.SKY} >= 1 and
+                <div class="mt-4" th:if="${result.PTY} >= 1 and ${result.SKY} >= 1 and
                      (${#strings.substring(result.fcstTime, 0, 2)} <= '19' and ${#strings.substring(result.fcstTime, 0, 2)} > '06')">
                     <i class="fa-solid fa-cloud-showers-heavy cloud-gray weather-size-sub"></i>
                 </div>
 
-                <div  class="mt-4" th:if="${result.PTY} >= 1 and ${result.SKY} >= 1 and
+                <div class="mt-4" th:if="${result.PTY} >= 1 and ${result.SKY} >= 1 and
                 (${#strings.substring(result.fcstTime, 0, 2)} > '19' or ${#strings.substring(result.fcstTime, 0, 2)} <= '06')">
                     <i class="fa-solid fa-cloud-moon-rain weather-moon weather-size-sub"></i>
                 </div>
@@ -151,7 +152,7 @@
     <!--실내온도-->
     <div class="flex flex-col space-y-6 w-full max-w-screen-sm bg-white p-10 mt-10 rounded-xl ring-8 ring-white ring-opacity-40"
          th:onclick="|location.href='@{/weather/list}'|">
-<!--         th:onclick="'location.href=\'' + @{/weather/list} + '\''">-->
+        <!--         th:onclick="'location.href=\'' + @{/weather/list} + '\''">-->
 
         <div class="flex justify-between">
             <div class="flex flex-col"><span class="text-5xl mt-1 text-gray-500">실내온도</span>
@@ -176,13 +177,14 @@
     <!-- 외부 온도 -->
     <div class="flex flex-col space-y-6 w-full max-w-screen-sm bg-white p-10 mt-10 rounded-xl ring-8 ring-white ring-opacity-40"
          th:onclick="|location.href='@{/weather/list-external}'|">
-<!--         th:onclick="'location.href=\'' + @{/weather/list} + '\''">-->
+        <!--         th:onclick="'location.href=\'' + @{/weather/list} + '\''">-->
 
         <div class="flex justify-between">
             <div class="flex flex-col"><span class="text-5xl mt-1 text-gray-500">외부온도</span>
                 <div class="mt-4"></div>
                 <div class="flex items-center"> 온도 : &nbsp;
-                    <span class="font-semibold mt-1 text-gray-500" th:text="${weatherExternal.temperature} + ' °C'"></span>
+                    <span class="font-semibold mt-1 text-gray-500"
+                          th:text="${weatherExternal.temperature} + ' °C'"></span>
                 </div>
                 <div class="flex items-center">
                     습도 : &nbsp;
@@ -190,7 +192,8 @@
                 </div>
                 <div class="flex items-center">
                     토양 습도 : &nbsp;
-                    <span class="font-semibold mt-1 text-gray-500" th:text="${weatherExternal.soilMoisture} + ' %'"></span>
+                    <span class="font-semibold mt-1 text-gray-500"
+                          th:text="${weatherExternal.soilMoisture} + ' %'"></span>
                 </div>
             </div>
         </div>
@@ -214,28 +217,89 @@
             </div>
 
             <div class="flex align-items-center justify-end w-1/4 pr-10">
-
                 <span class="font-semibold">
-                    <div th:if="${set.wfAm} =='맑음'">
-                    <i class="wi wi-day-sunny text-yellow-400  weather-size-bot"></i>
-                    </div>
+                    <th:block th:switch="${set?.wfAm}">
+                        <div th:case="null">
+                            <i class="fas fa-question-circle text-gray-400 weather-size-bot"></i>
+                        </div>
+                        <div th:case="'맑음'">
+                            <i class="wi wi-day-sunny text-yellow-400 weather-size-bot"></i>
+                        </div>
+                        <div th:case="'구름많음'">
+                            <i class="fa-solid fa-cloud-sun cloud-gray weather-size-bot"></i>
+                        </div>
+                        <div th:case="'흐림'">
+                            <i class="fa-solid fa-cloud 2x cloud-gray"></i>
+                        </div>
+                        <div th:case="*">
+                            <i th:if="${#strings.containsIgnoreCase(set.wfAm, '비') or #strings.containsIgnoreCase(set.wfAm, '소나기')}"
+                                        class="fa-solid fa-cloud-showers-heavy cloud-gray weather-size-bot2"></i>
+                            <i th:if="${#strings.containsIgnoreCase(set.wfAm, '눈')}"
+                                class="fa-solid fa-snowflake cloud-gray weather-size-bot2"></i>
+                            <i th:unless="${#strings.containsIgnoreCase(set.wfAm, '비') or #strings.containsIgnoreCase(set.wfAm, '소나기') or #strings.containsIgnoreCase(set.wfAm, '눈')}"
+                                class="fas fa-question-circle text-gray-400 weather-size-bot"></i>
+                        </div>
+                    </th:block>
+            </span>
 
-                    <div th:if="${set.wfAm} =='구름많음'">
-                        <i class="fa-solid fa-cloud-sun  cloud-gray weather-size-bot"></i>
-                    </div>
+            <!-- wfAm -->
+                <!--   <span class="font-semibold">
+                       <div th:if="${set?.wfAm == null}">
+                           <i class="fas fa-question-circle text-gray-400 weather-size-bot"></i>
+                       </div>
 
-                    <div th:if="${set.wfAm} =='흐림'" >
-                        <i class="fa-solid fa-cloud 2x cloud-gray "></i>
-                    </div>
+                       <div th:if="${set.wfAm} =='맑음'">
+                           <i class="wi wi-day-sunny text-yellow-400  weather-size-bot"></i>
+                       </div>
 
+                       <div th:if="${set.wfAm} =='구름많음'">
+                           <i class="fa-solid fa-cloud-sun  cloud-gray weather-size-bot"></i>
+                       </div>
 
-                  <div th:if="${#strings.contains(set.wfAm, '비')} or ${#strings.contains(set.wfAm, '소나기')}">
-                        <i class="fa-solid fa-cloud-showers-heavy  cloud-gray  weather-size-bot2"></i>
-                    </div>
+                       <div th:if="${set.wfAm} =='흐림'">
+                           <i class="fa-solid fa-cloud 2x cloud-gray "></i>
+                       </div>
 
-                </span>
+                       <div th:if="${#strings.contains(set.wfAm, '비')} or ${#strings.contains(set.wfAm, '소나기')}">
+                           <i class="fa-solid fa-cloud-showers-heavy  cloud-gray  weather-size-bot2"></i>
+                       </div>
+
+                       <div th:if="${#strings.contains(set.wfAm, '눈')}">
+                           <i class="fa-solid fa-snowflake cloud-gray weather-size-bot2"></i>
+                       </div>
+                   </span>-->
+
                 <span class="font-bold text-2xl mx-4 align-content-center">/</span>
                 <span class="font-semibold">
+                    <th:block th:switch="${set?.wfPm}">
+                        <div th:case="null">
+                            <i class="fas fa-question-circle text-gray-400 weather-size-bot"></i>
+                        </div>
+                        <div th:case="'맑음'">
+                            <i class="wi wi-day-sunny text-yellow-400 weather-size-bot"></i>
+                        </div>
+                        <div class="ml-" th:case="'구름많음'">
+                            <i class="fa-solid fa-cloud-sun cloud-gray weather-size-bot"></i>
+                        </div>
+                        <div th:case="'흐림'">
+                            <i class="fa-solid fa-cloud cloud-gray"></i>
+                        </div>
+                        <div th:case="*">
+                            <i th:if="${#strings.containsIgnoreCase(set.wfPm, '비') or #strings.containsIgnoreCase(set.wfPm, '소나기')}"
+                                        class="fa-solid fa-cloud-showers-heavy cloud-gray weather-size-bot2"></i>
+                            <i th:if="${#strings.containsIgnoreCase(set.wfPm, '눈')}"
+                                        class="fa-solid fa-snowflake cloud-gray weather-size-bot2"></i>
+                            <i th:unless="${#strings.containsIgnoreCase(set.wfPm, '비') or #strings.containsIgnoreCase(set.wfPm, '소나기') or #strings.containsIgnoreCase(set.wfPm, '눈')}"
+                                        class="fas fa-question-circle text-gray-400 weather-size-bot"></i>
+                        </div>
+                    </th:block>
+                </span>
+
+                <!--  wfPm -->
+         <!--       <span class="font-semibold">
+                    <div th:if="${set?.wfPm == null}">
+                        <i class="fas fa-question-circle text-gray-400 weather-size-bot"></i>
+                    </div>
 
                     <div th:if="${set.wfPm} =='맑음'">
                         <i class="wi wi-day-sunny text-yellow-400  weather-size-bot"></i>
@@ -249,13 +313,14 @@
                         <i class="fa-solid fa-cloud  cloud-gray "></i>
                     </div>
 
-                   <div th:if="${#strings.contains(set.wfPm, '비')} or ${#strings.contains(set.wfPm, '소나기')}">
+                    <div th:if="${#strings.contains(set.wfPm, '비')} or ${#strings.contains(set.wfPm, '소나기')}">
                         <i class="fa-solid fa-cloud-showers-heavy  cloud-gray  weather-size-bot2"></i>
                     </div>
-                </span>
+                </span>-->
             </div>
 
-            <span th:text="${set.taMin}+'° / '+${set.taMax}+'°'" class="font-semibold text-lg w-1/4 text-right">0° / 0°</span>
+            <span th:text="${set.taMin}+'° / '+${set.taMax}+'°'"
+                  class="font-semibold text-lg w-1/4 text-right">0° / 0°</span>
         </div>
     </div>
 

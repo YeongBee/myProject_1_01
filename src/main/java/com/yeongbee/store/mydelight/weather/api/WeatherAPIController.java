@@ -43,9 +43,11 @@ public class WeatherAPIController {
 
         model.addAttribute("weatherUSN", weatherUSN);
         model.addAttribute("weatherFive", fiveWeather);
-        model.addAttribute("myApiEntity", myApiEntity);
         model.addAttribute("weatherSets", weatherSht);
+        model.addAttribute("myApiEntity", myApiEntity);
         model.addAttribute("weatherExternal", myApiEntityExternal);
+
+
 
 //        log.info("weatherUSN={}",weatherUSN.toString());
 //        log.info("weatherFive={}",fiveWeather.toString());
