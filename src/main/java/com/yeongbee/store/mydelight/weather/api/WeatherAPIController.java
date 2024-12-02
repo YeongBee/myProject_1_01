@@ -34,6 +34,9 @@ public class WeatherAPIController {
     public String weatherShows(Model model) {
 
         List<WeatherSetEntity> weatherSht = shtService.getWeatherShtSet();
+
+//        log.warn("weatherSht = {}", weatherSht);
+
         weatherSht.addAll(midService.getWeatherMidSet());
         WeatherUSN weatherUSN = shtService.getWeatherUsn();
         List<WeatherForecastAPI> fiveWeather = shtService.getShtFiveWeather();
@@ -41,12 +44,20 @@ public class WeatherAPIController {
         WeatherMyApiEntityExternal myApiEntityExternal = myApiExternalService.findLatestData();
 
 
-        model.addAttribute("weatherUSN", weatherUSN);
-        model.addAttribute("weatherFive", fiveWeather);
-        model.addAttribute("weatherSets", weatherSht);
+        model.addAttribute("weatherUSN", weatherUSN);       // 현재온도
+        model.addAttribute("weatherFive", fiveWeather);     // 2시간 마다 데이터
+        model.addAttribute("weatherSets", weatherSht);      // 4 ~ 7  일 데이터
+
+        // --- myApi ---
         model.addAttribute("myApiEntity", myApiEntity);
         model.addAttribute("weatherExternal", myApiEntityExternal);
 
+
+
+            //TODO
+     /*   for (WeatherSetEntity weatherSetEntity : weatherSht) {
+            log.warn("weatherSetEntity = {}", weatherSetEntity);
+        }*/
 
 
 //        log.info("weatherUSN={}",weatherUSN.toString());

@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,16 +54,18 @@ public class WeatherMidService {
     public List<WeatherSetEntity> getWeatherMidSet(){
         List<WeatherSetEntity> weatherList = new ArrayList<>();
 
-        weatherList.add(new WeatherSetEntity(
-                weatherMidLandApiEntity.getRnSt3Am(),
-                weatherMidLandApiEntity.getRnSt3Pm(), weatherMidTmpApiEntity.getTaMin3(),
-                weatherMidTmpApiEntity.getTaMax3(), weatherMidLandApiEntity.getWf3Am(),
-                weatherMidLandApiEntity.getWf3Pm()));
+        // TODO
+        // 중기예보 4일부터 10일까지 나옴 -> 단기예보 늘어남
 
-        weatherList.add(new WeatherSetEntity(weatherMidLandApiEntity.getRnSt4Am(),
-                weatherMidLandApiEntity.getRnSt4Pm(), weatherMidTmpApiEntity.getTaMin4(),
-                weatherMidTmpApiEntity.getTaMax4(), weatherMidLandApiEntity.getWf4Am(),
-                weatherMidLandApiEntity.getWf4Pm()));
+
+        LocalTime currentTime = LocalTime.now();
+        LocalTime sixPM = LocalTime.of(18, 0);
+        if(currentTime.isBefore(sixPM)) {
+            weatherList.add(new WeatherSetEntity(weatherMidLandApiEntity.getRnSt4Am(),
+                    weatherMidLandApiEntity.getRnSt4Pm(), weatherMidTmpApiEntity.getTaMin4(),
+                    weatherMidTmpApiEntity.getTaMax4(), weatherMidLandApiEntity.getWf4Am(),
+                    weatherMidLandApiEntity.getWf4Pm()));
+        }
 
         weatherList.add(new WeatherSetEntity(weatherMidLandApiEntity.getRnSt5Am(),
                 weatherMidLandApiEntity.getRnSt5Pm(), weatherMidTmpApiEntity.getTaMin5(),
@@ -77,6 +80,12 @@ public class WeatherMidService {
                 weatherMidLandApiEntity.getRnSt7Pm(), weatherMidTmpApiEntity.getTaMin7(),
                 weatherMidTmpApiEntity.getTaMax7(), weatherMidLandApiEntity.getWf7Am(),
                 weatherMidLandApiEntity.getWf7Pm()));
+
+        //TODO
+  /*      for (WeatherSetEntity weatherSetEntity : weatherList) {
+            log.warn(weatherSetEntity.toString());
+        }*/
+
         return weatherList ;
     }
 

@@ -19,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,19 +72,42 @@ public class WeatherShtService {
 
         String nextDay = localDateTime.plusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         String afterTomorrow = localDateTime.plusDays(2).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String afterTomorrow2 = localDateTime.plusDays(3).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String afterTomorrow3 = localDateTime.plusDays(4).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
 
         for (WeatherForecastAPI weatherForecastAPI : weatherForecastList) {
             String forecastDate = weatherForecastAPI.getFcstDate();
             String forecastTime = weatherForecastAPI.getFcstTime();
 
             if ((forecastDate.equals(nextDay) && (forecastTime.equals("0600") || forecastTime.equals("1500"))) ||
-                    (forecastDate.equals(afterTomorrow) && (forecastTime.equals("0600") || forecastTime.equals("1500")))) {
+                    (forecastDate.equals(afterTomorrow) && (forecastTime.equals("0600") || forecastTime.equals("1500"))) ||
+                    (forecastDate.equals(afterTomorrow2) && (forecastTime.equals("0600") || forecastTime.equals("1500")))) {
                 getLists.add(weatherForecastAPI);
-                if (getLists.size() == 4) {
+
+
+            }
+
+            LocalTime currentTime = LocalTime.now();
+            LocalTime sixPM = LocalTime.of(18, 0);
+            if(currentTime.isAfter(sixPM)) {
+                if(forecastDate.equals(afterTomorrow3) && (forecastTime.equals("0600") || forecastTime.equals("1500"))){
+                    getLists.add(weatherForecastAPI);
+                }
+                if (getLists.size() == 8) {
+                    break;
+                }
+            } else {
+                if (getLists.size() == 6) {
                     break;
                 }
             }
         }
+
+        //TODO
+/*        for (WeatherForecastAPI getList : getLists) {
+            log.warn("getList = {}",getList.toString());
+        }*/
+
 
         weatherList.add(new WeatherSetEntity(
                 Long.parseLong(getLists.get(0).getPOP()), // rnStAm
@@ -91,7 +115,8 @@ public class WeatherShtService {
                 (long)Double.parseDouble(getLists.get(0).getTMN()), // taMin
                 (long)Double.parseDouble(getLists.get(1).getTMX()), // taMax
                 getLists.get(0).getSKY().equals("1")?"맑음":"흐림",
-                getLists.get(1).getSKY().equals("1")?"맑음":"흐림"));
+                getLists.get(1).getSKY().equals("1")?"맑음":"흐림"
+        ));
 
         weatherList.add(new WeatherSetEntity(
                 Long.parseLong(getLists.get(2).getPOP()), // rnStAm
@@ -101,6 +126,29 @@ public class WeatherShtService {
                 getLists.get(2).getSKY().equals("1")?"맑음":"흐림", // wfAm
                 getLists.get(3).getSKY().equals("1")?"맑음":"흐림" // wfPm
         ));
+
+        weatherList.add(new WeatherSetEntity(
+                Long.parseLong(getLists.get(4).getPOP()), // rnStAm
+                Long.parseLong(getLists.get(5).getPOP()), // rnStPm
+                (long)Double.parseDouble(getLists.get(4).getTMN()), // taMin
+                (long)Double.parseDouble(getLists.get(5).getTMX()), // taMax
+                getLists.get(4).getSKY().equals("1")?"맑음":"흐림", // wfAm
+                getLists.get(5).getSKY().equals("1")?"맑음":"흐림" // wfPm
+        ));
+
+//        LocalTime currentTime = LocalTime.now();
+//        LocalTime sixPM = LocalTime.of(18, 0);
+//        if(currentTime.isAfter(sixPM)) {
+//            weatherList.add(new WeatherSetEntity(
+//                    Long.parseLong(getLists.get(6).getPOP()), // rnStAm
+//                    Long.parseLong(getLists.get(7).getPOP()), // rnStPm
+//                    (long)Double.parseDouble(getLists.get(6).getTMN()), // taMin
+//                    (long)Double.parseDouble(getLists.get(7).getTMX()), // taMax
+//                    getLists.get(6).getSKY().equals("1")?"맑음":"흐림", // wfAm
+//                    getLists.get(7).getSKY().equals("1")?"맑음":"흐림" // wfPm
+//            ));
+//        }
+
         return weatherList;
     }
 
@@ -219,7 +267,9 @@ public class WeatherShtService {
                 updateEntityFromJsonObject(weatherForecastAPI, category, value);
             }
 
-
+//        for (WeatherForecastAPI weatherForecastAPI : weatherForecastList) {
+//            log.info("weatherForecastAPI : {}", weatherForecastAPI);
+//        }
 
         log.info("weatherShtDate={}  weatherShtTime={}", baseDate, baseTime);
 //        log.info("WeatherShtService : update Size={}", weatherForecastList.size());
@@ -250,7 +300,9 @@ public class WeatherShtService {
                 WeatherForecastAPI weatherForecastAPI = findExistingForecast(forcastDate, forcastTime);
                 updateEntityFromJsonObject(weatherForecastAPI, category, value);
             }
+
             log.info("WeatherSht Update : {}", baseTime);
+
 //            log.info("weatherForecastList size: " + weatherForecastList.size());
         } catch (NullPointerException e){
             retryInputData();
