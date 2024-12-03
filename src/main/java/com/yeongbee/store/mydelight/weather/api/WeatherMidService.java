@@ -59,8 +59,10 @@ public class WeatherMidService {
 
 
         LocalTime currentTime = LocalTime.now();
+        LocalTime sixAm = LocalTime.of(6, 0);
         LocalTime sixPM = LocalTime.of(18, 0);
-        if(currentTime.isBefore(sixPM)) {
+
+        if(currentTime.isAfter(sixAm) && currentTime.isBefore(sixPM)) {
             weatherList.add(new WeatherSetEntity(weatherMidLandApiEntity.getRnSt4Am(),
                     weatherMidLandApiEntity.getRnSt4Pm(), weatherMidTmpApiEntity.getTaMin4(),
                     weatherMidTmpApiEntity.getTaMax4(), weatherMidLandApiEntity.getWf4Am(),
@@ -81,10 +83,7 @@ public class WeatherMidService {
                 weatherMidTmpApiEntity.getTaMax7(), weatherMidLandApiEntity.getWf7Am(),
                 weatherMidLandApiEntity.getWf7Pm()));
 
-        //TODO
-  /*      for (WeatherSetEntity weatherSetEntity : weatherList) {
-            log.warn(weatherSetEntity.toString());
-        }*/
+
 
         return weatherList ;
     }

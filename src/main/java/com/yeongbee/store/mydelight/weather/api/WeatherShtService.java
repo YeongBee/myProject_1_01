@@ -11,6 +11,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cglib.core.Local;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -70,6 +71,10 @@ public class WeatherShtService {
         List<WeatherSetEntity> weatherList = new ArrayList<>();
         List<WeatherForecastAPI> getLists = new ArrayList<>();
 
+        LocalTime currentTime = LocalTime.now();
+        LocalTime sixAM = LocalTime.of(6, 0);
+        LocalTime sixPM = LocalTime.of(18, 0);
+
         String nextDay = localDateTime.plusDays(1).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         String afterTomorrow = localDateTime.plusDays(2).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
         String afterTomorrow2 = localDateTime.plusDays(3).format(DateTimeFormatter.ofPattern("yyyyMMdd"));
@@ -83,13 +88,9 @@ public class WeatherShtService {
                     (forecastDate.equals(afterTomorrow) && (forecastTime.equals("0600") || forecastTime.equals("1500"))) ||
                     (forecastDate.equals(afterTomorrow2) && (forecastTime.equals("0600") || forecastTime.equals("1500")))) {
                 getLists.add(weatherForecastAPI);
-
-
             }
 
-            LocalTime currentTime = LocalTime.now();
-            LocalTime sixPM = LocalTime.of(18, 0);
-            if(currentTime.isAfter(sixPM)) {
+            if(currentTime.isAfter(sixAM) && currentTime.isBefore(sixPM)) {
                 if(forecastDate.equals(afterTomorrow3) && (forecastTime.equals("0600") || forecastTime.equals("1500"))){
                     getLists.add(weatherForecastAPI);
                 }
@@ -102,12 +103,6 @@ public class WeatherShtService {
                 }
             }
         }
-
-        //TODO
-/*        for (WeatherForecastAPI getList : getLists) {
-            log.warn("getList = {}",getList.toString());
-        }*/
-
 
         weatherList.add(new WeatherSetEntity(
                 Long.parseLong(getLists.get(0).getPOP()), // rnStAm
@@ -127,27 +122,17 @@ public class WeatherShtService {
                 getLists.get(3).getSKY().equals("1")?"맑음":"흐림" // wfPm
         ));
 
-        weatherList.add(new WeatherSetEntity(
-                Long.parseLong(getLists.get(4).getPOP()), // rnStAm
-                Long.parseLong(getLists.get(5).getPOP()), // rnStPm
-                (long)Double.parseDouble(getLists.get(4).getTMN()), // taMin
-                (long)Double.parseDouble(getLists.get(5).getTMX()), // taMax
-                getLists.get(4).getSKY().equals("1")?"맑음":"흐림", // wfAm
-                getLists.get(5).getSKY().equals("1")?"맑음":"흐림" // wfPm
-        ));
+        if(currentTime.isBefore(sixAM) && currentTime.isAfter(sixPM)) {
+            weatherList.add(new WeatherSetEntity(
+                    Long.parseLong(getLists.get(4).getPOP()), // rnStAm
+                    Long.parseLong(getLists.get(5).getPOP()), // rnStPm
+                    (long)Double.parseDouble(getLists.get(4).getTMN()), // taMin
+                    (long)Double.parseDouble(getLists.get(5).getTMX()), // taMax
+                    getLists.get(4).getSKY().equals("1")?"맑음":"흐림", // wfAm
+                    getLists.get(5).getSKY().equals("1")?"맑음":"흐림" // wfPm
+            ));
+        }
 
-//        LocalTime currentTime = LocalTime.now();
-//        LocalTime sixPM = LocalTime.of(18, 0);
-//        if(currentTime.isAfter(sixPM)) {
-//            weatherList.add(new WeatherSetEntity(
-//                    Long.parseLong(getLists.get(6).getPOP()), // rnStAm
-//                    Long.parseLong(getLists.get(7).getPOP()), // rnStPm
-//                    (long)Double.parseDouble(getLists.get(6).getTMN()), // taMin
-//                    (long)Double.parseDouble(getLists.get(7).getTMX()), // taMax
-//                    getLists.get(6).getSKY().equals("1")?"맑음":"흐림", // wfAm
-//                    getLists.get(7).getSKY().equals("1")?"맑음":"흐림" // wfPm
-//            ));
-//        }
 
         return weatherList;
     }
